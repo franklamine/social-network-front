@@ -1,0 +1,28 @@
+{
+  "utilisateurs": [
+    {
+      "id": "8eee",
+      "nomUtilisateur": "lamine",
+      "prenomUtilisateur": "frank",
+      "emailUtilisateur": "franklamine@gmail.com",
+      "motDePasse": "1234",
+      "motDePasseConfirmation": "1234"
+    },
+    {
+      "id": "859c",
+      "nomUtilisateur": "lamine",
+      "prenomUtilisateur": "frank",
+      "emailUtilisateur": "fokamfranklamine@gmail.com",
+      "motDePasse": "1234",
+      "motDePasseConfirmation": "1234"
+    }
+  ],
+  "publications": [
+    {
+      "id": 1,
+      "titre": "Frank",
+      "contenu": "Lamine",
+      "utilisateur": 1
+    }
+  ]
+}
