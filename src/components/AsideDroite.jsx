@@ -6,7 +6,7 @@ function AsideDroite() {
 
     return (
         <aside
-            className="fixed top-16 right-0 bottom-0 w-1/5 bg-white p-4 rounded-l-2xl shadow-lg overflow-auto z-40">
+            className="hidden sm:block fixed top-16 right-0 bottom-0 w-[25%] bg-white p-4 rounded-l-2xl shadow-lg  z-40">
             <h2 className="text-lg font-bold mb-4 text-rose-600">Suggestions d’amis</h2>
             <ul className="space-y-3">
                 <li className="flex justify-between items-center">

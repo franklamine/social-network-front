@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const customAxios = axios.create({
+const customAxios = axios.create({
     baseURL:  "http://localhost:8081/frank-api",
 })
 
@@ -13,11 +13,13 @@ customAxios.interceptors.request.use((config) => {
 }, (error) => Promise.reject(error)
 );
 
+
 customAxios.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        if (error.response?.status === 403 && !originalRequest._retry) {
+        console.log(originalRequest);
+        if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
             originalRequest._retry = true;
 
         try {
@@ -33,18 +35,22 @@ customAxios.interceptors.response.use(
             localStorage.setItem("token", JSON.stringify(tokens));
 
             // Met à jour le header Authorization pour la requête initiale
-            customAxios.defaults.headers.common["Authorization"] = `Bearer ${nouveauToken}`;
+            // customAxios.defaults.headers.common["Authorization"] = `Bearer ${nouveauToken}`;
             originalRequest.headers.Authorization = `Bearer ${nouveauToken}`;
 
             // Réexécute la requête initiale
             return customAxios(originalRequest);
         } catch (e) {
             localStorage.removeItem("token");
-            // window.location.href = "/connexion";
+            window.location.href = "/connexion";
             return Promise.reject(e);
         }
         }
         return Promise.reject(error);
     }
 );
+
+
+
+export default customAxios;
 

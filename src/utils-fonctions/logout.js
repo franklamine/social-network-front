@@ -1,5 +1,5 @@
 import {toast} from "react-toastify";
-import {customAxios} from "../api/httpClients.js";
+import customAxios from "../api/customAxios.js";
 
 
 export const logout = (navigate, setAccessToken) => {

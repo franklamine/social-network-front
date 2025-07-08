@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {customAxios} from "../api/httpClients.js";
+import {customAxios} from "../api/customAxios.js";
 import {toast} from "react-toastify";
 
 export const useGetAllPublications = () => {

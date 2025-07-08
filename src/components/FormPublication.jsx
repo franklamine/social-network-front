@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import {useForm} from "react-hook-form";
 import {toast} from "react-toastify";
-import {customAxios} from "../api/httpClients.js";
 import {StoreContext} from "../context/StoreContext.jsx";
+import customAxios from "../api/customAxios.js";
 
 
 export default function FormPublication() {
@@ -18,6 +18,7 @@ export default function FormPublication() {
 
 
     const onSubmit = (data) => {
+        console.log(data);
         if (!data.message.trim()) {
             toast.error("La description est obligatoire");
             return;
@@ -26,9 +27,9 @@ export default function FormPublication() {
         const formData = new FormData();
         formData.append("message", data.message);
 
-        // if (data.photos && data.photos.length > 0) {
-        //     formData.append("photo", data.photos[0]);
-        // }
+        if (data.photos && data.photos.length > 0) {
+            formData.append("photo", data.photos[0]);
+        }
 
         if (data.video && data.video.length > 0) {
             formData.append("video", data.video[0]);

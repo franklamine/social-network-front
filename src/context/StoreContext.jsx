@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
-import {customAxios} from "../api/httpClients.js";
+// import {jwtDecode} from "jwt-decode";
+import customAxios from "../api/customAxios.js";
 
 
 export const StoreContext = createContext(null);
@@ -13,40 +13,43 @@ function StoreContextProvider({children}) {
     const [publications, setPublications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
-    const [isValidAccessToken, setValidAccessToken] = useState(true);
-    const [authLoading, setAuthLoading] = useState(true);
+    // const [isValidAccessToken, setValidAccessToken] = useState(true);
 
 
 
     useEffect(() => {
-        if (!accessToken && localStorage.getItem("token")) {
-            setAccessToken(JSON.parse(localStorage.getItem("token")).accessToken);
+        const tokens = localStorage.getItem("token");
+        if (tokens) {
+            const accessToken = JSON.parse(tokens).accessToken;
+            setAccessToken(accessToken);
         }
-        setAuthLoading(false); // Ici on dit "J'ai fini de lire le localStorage"
+    }, []);
 
-    }, [accessToken])
 
 // verifies if the token is not expired
-    useEffect(() => {
-        if (accessToken) {
-            try {
-                const jwtPayload = jwtDecode(accessToken);
-                const currentTime = Date.now() / 1000;
-                if (jwtPayload.exp < currentTime) {
-                    localStorage.removeItem("token");
-                    setAccessToken("");
-                    setValidAccessToken(false);
-                }
-            } catch (error) {
-                console.error("Erreur de décodage du token : ", error);
-                localStorage.removeItem("token");
-            }
-        }
-    }, [accessToken]);
+//     useEffect(() => {
+//         if (accessToken) {
+//             try {
+//                 const jwtPayload = jwtDecode(accessToken);
+//                 const currentTime = Date.now() / 1000;
+//                 if (jwtPayload.exp < currentTime) {
+//                     localStorage.removeItem("token");
+//                     setAccessToken("");
+//                     navigate("/connexion");
+//                 }
+//             } catch (error) {
+//                 console.error("Erreur de décodage du token : ", error);
+//                 localStorage.removeItem("token");
+//                 setAccessToken("");
+//                 navigate("/connexion");
+//             }
+//         }
+//     }, [accessToken, navigate]);
 
 
     // To get all post
     const getPublications = async () => {
+        setIsLoading(true);
         try {
             const response = await customAxios.get(`/publications`);
             if (response.status === 200) {
@@ -60,15 +63,15 @@ function StoreContextProvider({children}) {
     }
 
     useEffect(() => {
-        if(accessToken && isValidAccessToken) {
+        if (accessToken) {
             getPublications();
         }
-    }, [accessToken, isValidAccessToken]);
+    }, [accessToken]);
 
 
     const value = {
         navigate, publications, setPublications, isLoading, setIsLoading,
-        accessToken, setAccessToken, isValidAccessToken, getPublications,authLoading
+        accessToken, setAccessToken, getPublications
     }
 
     return (

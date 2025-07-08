@@ -59,22 +59,22 @@ export default function Navbar() {
             </div>
 
             <div className="flex gap-4 sm:gap-14 mr-4 text-gray-400">
-                <p className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
+                <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
                     <FaBars className="w-4 h-4 sm:w-6 sm:h-6 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Menu</span>
-                </p>
-                <p className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
+                </div>
+                <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
                     <FaMessage className="w-4 h-4 sm:w-6 sm:h-6 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Message</span>
-                </p>
-                <p className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
+                </div>
+                <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
                     <FaBell className="w-4 h-4 sm:w-6 sm:h-6 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Notifications</span>
-                </p>
-                <p onClick={() => setShowCart(!showCart)}
+                </div>
+                <div onClick={() => setShowCart(!showCart)}
                    className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
                     <FaUser className="w-4 h-4 sm:w-6 sm:h-6 "/>
                     <span
@@ -85,7 +85,7 @@ export default function Navbar() {
                             <ProfileCart/>
                         </div>
                     }
-                </p>
+                </div>
             </div>
 
         </nav>
