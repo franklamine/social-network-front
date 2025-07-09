@@ -6,16 +6,16 @@ function AsideDroite() {
 
     return (
         <aside
-            className="hidden sm:block fixed top-16 right-0 bottom-0 w-[25%] bg-white p-4 rounded-l-2xl shadow-lg  z-40">
-            <h2 className="text-lg font-bold mb-4 text-rose-600">Suggestions d’amis</h2>
+            className="hidden sm:block fixed top-16 right-0 bottom-0 w-[25%]  p-4 z-40 text-facebookText">
+            <h2 className="text-lg  mb-4 ">Suggestions d’amis</h2>
             <ul className="space-y-3">
                 <li className="flex justify-between items-center">
-                    <span className="font-medium">Emma Lou</span>
-                    <button className="text-pink-500 hover:underline text-sm">Ajouter</button>
+                    <span className="">Emma Lou</span>
+                    <button className=" hover:underline ">Ajouter</button>
                 </li>
                 <li className="flex justify-between items-center">
-                    <span className="font-medium">Karim D.</span>
-                    <button className="text-pink-500 hover:underline text-sm">Ajouter</button>
+                    <span className="">Karim D.</span>
+                    <button className=" hover:underline ">Ajouter</button>
                 </li>
             </ul>
         </aside>

@@ -1,22 +1,24 @@
 import React, {useContext, useEffect} from 'react'
-import FormPublication from "../components/FormPublication.jsx";
-import Publications from "../components/Publications.jsx";
+import FormPost from "../components/FormPost.jsx";
+import PostItem from "../components/PostItem.jsx";
 import {StoreContext} from "../context/StoreContext.jsx";
+import {FaVideo} from "react-icons/fa6";
+import {FaPhotoVideo, FaSmile} from "react-icons/fa";
 
 function Home() {
-    const {navigate, accessToken, publications, isLoading, getPublications} = useContext(StoreContext);
 
+    const { accessToken, posts, isLoading, getAllPost} = useContext(StoreContext);
 
     useEffect(() => {
         if (accessToken) {
-            getPublications();
+            getAllPost();
         }
     }, [accessToken]);
 
     return (
         <div>
-            <FormPublication/>
-            {isLoading ? "Chargement..." : <Publications posts={publications}/>}
+            <FormPost/>
+            {isLoading ? "Chargement..." : <PostItem posts={posts}/>}
         </div>
     )
 }
