@@ -1,11 +1,15 @@
-import React, {useState} from "react";
-import {FaBars, FaBell, FaGamepad, FaHome, FaSearch, FaUser, FaUserFriends} from "react-icons/fa";
+import React, {useContext, useState} from "react";
+import {FaBars, FaBell, FaGamepad, FaHome, FaSearch, FaUser, FaUserCircle, FaUserFriends} from "react-icons/fa";
 import {FaMessage, FaVideo} from "react-icons/fa6";
 import {NavLink} from "react-router-dom";
 import Account from "./Account.jsx";
+import {StoreContext} from "../context/StoreContext.jsx";
 
 
 export default function Navbar() {
+
+    const {connectedUser} = useContext(StoreContext);
+    const photoProfile = connectedUser?.profile?.photoProfile;
 
     const [showAccount, setShowAccount] = useState(false);
 
@@ -76,8 +80,12 @@ export default function Navbar() {
                 </div>
                 <div onClick={() => setShowAccount(!showAccount)}
                    className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
-                    <img className="w-6 h-6 rounded-full object-cover" src="logo-min.png" alt=""/>
+                    {/*<img className="w-6 h-6 rounded-full object-cover" src="logo-min.png" alt=""/>*/}
                     {/*<FaUser className="w-4 h-4 sm:w-6 sm:h-6 "/>*/}
+                    {photoProfile ?
+                        <img className="w-6 h-6 rounded-full object-cover" src={photoProfile} alt=""/> :
+                        <FaUserCircle className="w-4 h-4 text-gray-400" />
+                    }
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Account</span>
 

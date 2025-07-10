@@ -7,7 +7,10 @@ import {FaPhotoVideo, FaSmile} from "react-icons/fa";
 
 function Home() {
 
-    const { accessToken, posts, isLoading, getAllPost} = useContext(StoreContext);
+    const {connectedUser, accessToken, posts, isLoading, getAllPost} = useContext(StoreContext);
+
+    const photoProfile = connectedUser?.profile?.photoProfile;
+
 
     useEffect(() => {
         if (accessToken) {
@@ -17,8 +20,8 @@ function Home() {
 
     return (
         <div>
-            <FormPost/>
-            {isLoading ? "Chargement..." : <PostItem posts={posts}/>}
+            <FormPost photoProfile={photoProfile} />
+            {isLoading ? "Chargement..." : <PostItem posts={posts} photoProfile={photoProfile} />}
         </div>
     )
 }

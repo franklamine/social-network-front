@@ -4,10 +4,11 @@ import {toast} from "react-toastify";
 import {StoreContext} from "../context/StoreContext.jsx";
 import customAxios from "../api/customAxios.js";
 import {FaVideo} from "react-icons/fa6";
-import {FaPaperPlane, FaPhotoVideo, FaSmile} from "react-icons/fa";
+import {FaPaperPlane, FaPhotoVideo, FaSmile, FaUser, FaUserCircle} from "react-icons/fa";
+import {Link} from "react-router-dom";
 
 
-export default function FormPost() {
+export default function FormPost({photoProfile}) {
 
     const {getPublications} = useContext(StoreContext);
 
@@ -56,9 +57,13 @@ export default function FormPost() {
 
     return (
         <>
-            <form  onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 bg-white rounded-2xl p-4 mb-5">
+            <form onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col gap-3 bg-white text-sm rounded-2xl p-4 mb-5">
                 <div className="flex items-center gap-4">
-                    <img className="w-10 h-10 rounded-full object-cover" src="logo-min.png" alt=""/>
+                    {photoProfile ?
+                        <Link to="/profile"><img className="w-10 h-10 rounded-full object-cover" src={`${photoProfile}`} alt=""/></Link> :
+                        <Link to="/profile"><FaUserCircle className="w-10 h-10 text-gray-400"/></Link>
+                    }
                     <textarea
                         {...register("message")}
                         className="rounded-2xl flex-1 bg-gray-200  p-2 text-gray-400  resize-none focus:outline-none "

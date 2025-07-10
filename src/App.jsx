@@ -10,6 +10,7 @@ import NouveauMotDePasse from "./pages/NouveauMotDePasse.jsx";
  import Video from "./pages/Video.jsx";
  import Game from "./pages/Game.jsx";
  import Home from "./pages/Home.jsx";
+ import Profile from "./pages/Profile.jsx";
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
                 <Route path="video" element={<Video />} />
                 <Route path="game" element={<Game />} />
             </Route>
+
+            <Route path="profile" element={<Profile />} />
 
             <Route path="/connexion" element={<Connexion />} />
             <Route path="/inscription" element={<Inscription />} />

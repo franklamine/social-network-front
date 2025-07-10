@@ -1,11 +1,11 @@
-import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes} from "react-icons/fa";
+import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes, FaUserCircle} from "react-icons/fa";
 import Comment from "./Comment.jsx";
-import {useState} from "react";
+import React, {useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 
 
-export default function PostItem({posts}) {
+export default function PostItem({photoProfile, posts}) {
     const [showComment, setShowComment] = useState(false);
     const [indexPost, setIndexPost] = useState(null);
     const [likedPosts, setLikedPosts] = useState({});
@@ -34,17 +34,20 @@ console.log(posts);
             {posts.map((post, index) => (
                 <div key={index} className="bg-white rounded-2xl shadow mx-auto mb-3 ">
                     <div className="flex items-center gap-4 px-2 pt-2">
-                        <img className="w-10 h-10 rounded-full object-cover" src="logo-min.png" alt=""/>
+                        {post.photoAuteurPublication ?
+                            <img className="w-10 h-10 rounded-full object-cover" src={`${post.photoAuteurPublication}`} alt=""/> :
+                            <FaUserCircle className="w-10 h-10 text-gray-400" />
+                        }
                         <div className="flex-1 flex items-center justify-between">{post.name}
                             <div>
-                                <h3 className="font-bold text-lg ">{post.utilisateur?.prenom}{" "}{post.utilisateur?.nom}</h3>
-                                <h4 className="text-sm">{formatDistanceToNow(new Date(post.date), {addSuffix:true, locale:fr})}</h4>
+                                <h3 className="font-semibold text-sm ">{post.auteurPublication}</h3>
+                                <h4 className="text-xs">{formatDistanceToNow(new Date(post.date), {addSuffix:true, locale:fr})}</h4>
                             </div>
-                            <FaTimes className="w-7 h-7 pr-3"/>
+                            <FaTimes className="w-7 h-7 pr-3 "/>
                         </div>
 
                     </div>
-                    <p className="px-2">{post.message}</p>
+                    <p className="px-2 text-sm">{post.message}</p>
 
                     {post.photo && (
                         <img src={post.photo} alt="photo" className="w-full"/>
@@ -56,7 +59,7 @@ console.log(posts);
                             Votre navigateur ne supporte pas la lecture vidéo.
                         </video>
                     )}
-                    <div className="flex items-center justify-between px-4 py-2 ">
+                    <div className="flex items-center justify-between text-sm px-4 py-2 ">
                         <div className="flex items-center gap-2 ">
                             <FaThumbsUp className="text-blue-500"/>
                             <span>22</span>
@@ -82,7 +85,7 @@ console.log(posts);
                     </div>
 
                     {showComment && indexPost === index ?
-                        <Comment postId={post.id} setShowComment={setShowComment}/> : ""}
+                        <Comment postId={post.id} setShowComment={setShowComment} photoProfile={photoProfile} /> : ""}
                 </div>
             ))}
         </div>

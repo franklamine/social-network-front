@@ -2,10 +2,10 @@ import React, {useContext} from 'react'
 import {useForm} from "react-hook-form";
 import customAxios from "../api/customAxios.js";
 import {toast} from "react-toastify";
-import {FaPaperPlane} from "react-icons/fa";
+import {FaPaperPlane, FaUserCircle} from "react-icons/fa";
 import {StoreContext} from "../context/StoreContext.jsx";
 
-function FormComment({postId}) {
+function FormComment({postId, photoProfile}) {
 
     const {getAllPost} = useContext(StoreContext);
 
@@ -34,7 +34,10 @@ function FormComment({postId}) {
 
     return (
         <div className="flex gap-2 p-3 ">
-            <img className="w-10 h-10 rounded-full object-cover" src="logo-min.png" alt=""/>
+            {photoProfile ?
+                <img className="w-10 h-10 rounded-full object-cover" src={`${photoProfile}`} alt=""/> :
+                <FaUserCircle className="w-10 h-10 text-gray-400"/>
+            }
             <form onSubmit={handleSubmit(onsubmit)} className="flex-1">
                 <div className="bg-gray-200 rounded-lg relative ">
                         <textarea {...register("message")}

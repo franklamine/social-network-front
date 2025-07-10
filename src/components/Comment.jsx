@@ -1,11 +1,11 @@
-import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes} from "react-icons/fa";
+import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes, FaUserCircle} from "react-icons/fa";
 import {StoreContext} from "../context/StoreContext.jsx";
 import React, {useContext} from "react";
 import FormComment from "./FormComment.jsx";
 import {differenceInHours, formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 
-function Comment({postId, setShowComment}) {
+function Comment({postId, setShowComment, photoProfile}) {
 
     const {posts} = useContext(StoreContext);
 
@@ -28,7 +28,7 @@ function Comment({postId, setShowComment}) {
                         {/*title */}
                         <div className=" flex justify-between items-center border-b-2 border-gray-200 p-2">
                             <h1></h1>
-                            <h1 className=" ">{post.utilisateur?.prenom}{" "}{post.utilisateur?.nom}{"'s"}{" "}Post</h1>
+                            <h1 className="font-semibold ">{post.auteurPublication}{"'s"}{" "}Post</h1>
                             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 ">
                                 <FaTimes onClick={() => setShowComment(false)} className="cursor-pointer"/>
                             </div>
@@ -37,17 +37,21 @@ function Comment({postId, setShowComment}) {
                         {/*post*/}
                         <div className="bg-white rounded-2xl shadow mx-auto mb-3 ">
                             <div className="flex items-center gap-4 px-2 pt-2">
-                                <img className="w-10 h-10 rounded-full object-cover" src="logo-min.png" alt=""/>
-                                <div className="flex-1">{post.name}
-                                    <h3 className="font-bold text-lg ">{post.utilisateur?.prenom}{" "}{post.utilisateur?.nom}</h3>
-                                    <h4 className="text-sm">{formatDistanceToNow(new Date(post.date), {
+                                {post.photoAuteurPublication ?
+                                    <img className="w-10 h-10 rounded-full object-cover" src={post.photoAuteurPublication}
+                                         alt=""/> :
+                                    <FaUserCircle className="w-10 h-10 text-gray-400"/>
+                                }
+                                <div className="flex-1">
+                                    <h3 className="font-semibold text-sm ">{post.auteurPublication}</h3>
+                                    <h4 className="text-xs">{formatDistanceToNow(new Date(post.date), {
                                         addSuffix: true,
                                         locale: fr
                                     })}</h4>
                                 </div>
 
                             </div>
-                            <p className="px-2">{post.message}</p>
+                            <p className="px-2 text-sm">{post.message}</p>
 
                             {post.photo && (
                                 <img src={post.photo} alt="photo" className="w-full"/>
@@ -59,7 +63,7 @@ function Comment({postId, setShowComment}) {
                                     Votre navigateur ne supporte pas la lecture vidéo.
                                 </video>
                             )}
-                            <div className="flex items-center justify-between px-4 py-2 ">
+                            <div className="flex items-center justify-between text-sm px-4 py-2 ">
                                 <div className="flex items-center gap-2 ">
                                     <FaThumbsUp className="text-blue-500"/>
                                     <span>22</span>
@@ -89,14 +93,18 @@ function Comment({postId, setShowComment}) {
                             {/*Comment list*/}
                             {comments?.map((comment, index) => (
                                 <div key={index} className="">
-                                    <div className="flex items-center gap-4 p-3 bg-gray-200 rounded-lg mx-2 ">
-                                        <img className="w-10 h-10 rounded-full object-cover" src="logo-min.png" alt=""/>
-                                        <div>
-                                            <p className="font-semibold text-sm">{comment.utilisateur?.prenom}{" "}{comment.utilisateur?.nom}</p>
+                                    <div className="flex items-center gap-4 p-3 ">
+                                        {comment.photoAuteurComment ?
+                                            <img className="w-10 h-10 rounded-full object-cover" src={comment.photoAuteurComment}
+                                                 alt=""/> :
+                                            <FaUserCircle className="w-10 h-10 text-gray-400"/>
+                                        }
+                                        <div className="bg-gray-200 rounded-lg p-2 ">
+                                            <p className="font-semibold text-sm">{comment.auteurComment}</p>
                                             <p className="text-sm">{comment.message}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-4 ml-10 text-xs">
+                                    <div className="flex items-center gap-4 ml-20 text-xs mt-[-10px]">
                                         <p className="text-sm">{differenceInHours(new Date(), new Date(post.date))}h</p>
                                         <p>Like</p>
                                         <p>Reply</p>
@@ -105,7 +113,7 @@ function Comment({postId, setShowComment}) {
                             ))}
 
                             {/*Form to make et comment*/}
-                            <FormComment postId={postId}/>
+                            <FormComment postId={postId} photoProfile={photoProfile} />
 
                         </div>
 
