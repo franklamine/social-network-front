@@ -8,12 +8,12 @@ export const StoreContext = createContext(null);
 
 function StoreContextProvider({children}) {
 
-    const [connectedUser, setConnectedUser] = useState({});
+    const [user, setUser] = useState({});
+    const [userConnected, setUserConnected] = useState({});
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
-
 
     useEffect(() => {
         const tokens = localStorage.getItem("token");
@@ -26,15 +26,28 @@ function StoreContextProvider({children}) {
     //get connected user
     const getConnectedUser = async () => {
         try {
-            const res = await customAxios.get("/utilisateurs/connected");
+            const res = await customAxios.get(`/utilisateurs/connected`);
             console.log(res);
             if (res.status === 200) {
-                setConnectedUser(res.data);
+                setUserConnected(res.data);
             }
         }catch (error) {
             console.log(error);
         }
     }
+
+    const getUserById = async (userId) => {
+        try {
+            const res = await customAxios.get(`/utilisateurs/${userId}`);
+            console.log(res);
+            if (res.status === 200) {
+                setUser(res.data);
+            }
+        }catch (error) {
+            console.log(error);
+        }
+    }
+
 
     useEffect(() => {
         if (accessToken) {
@@ -66,8 +79,8 @@ function StoreContextProvider({children}) {
 
 
     const value = {
-        connectedUser, navigate, posts, setPosts, isLoading, setIsLoading,
-        accessToken, setAccessToken, getAllPost, getConnectedUser
+        user, userConnected, navigate, posts, setPosts, isLoading, setIsLoading,
+        accessToken, setAccessToken, getAllPost, getUserById, getConnectedUser
     }
 
     return (

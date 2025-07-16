@@ -1,16 +1,14 @@
-import React, {useContext} from "react";
 import {useForm} from "react-hook-form";
 import {toast} from "react-toastify";
-import {StoreContext} from "../context/StoreContext.jsx";
 import customAxios from "../api/customAxios.js";
 import {FaVideo} from "react-icons/fa6";
 import {FaPaperPlane, FaPhotoVideo, FaSmile, FaUser, FaUserCircle} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import React from "react";
 
 
-export default function FormPost({photoProfile}) {
+export default function FormPost({photoProfileUserConnected, getAllPost, idUserConnected, getUserById}) {
 
-    const {getPublications} = useContext(StoreContext);
 
     const {
         register,
@@ -45,7 +43,7 @@ export default function FormPost({photoProfile}) {
                 },
             })
             .then(() => {
-                getPublications();
+                getAllPost();
                 toast.success("Publication réussie !");
                 reset();
             })
@@ -60,10 +58,14 @@ export default function FormPost({photoProfile}) {
             <form onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-3 bg-white text-sm rounded-2xl p-4 mb-5">
                 <div className="flex items-center gap-4">
-                    {photoProfile ?
-                        <Link to="/profile"><img className="w-10 h-10 rounded-full object-cover" src={`${photoProfile}`} alt=""/></Link> :
-                        <Link to="/profile"><FaUserCircle className="w-10 h-10 text-gray-400"/></Link>
+                    {photoProfileUserConnected ?
+                        <Link to={`/profile/${idUserConnected}`} onClick={() => getUserById(idUserConnected)}><img
+                            className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected}
+                            alt=""/></Link> :
+                        <Link to={`/profile/${idUserConnected}`} onClick={() => getUserById(idUserConnected)}><FaUserCircle
+                            className="w-10 h-10 text-gray-400"/></Link>
                     }
+
                     <textarea
                         {...register("message")}
                         className="rounded-2xl flex-1 bg-gray-200  p-2 text-gray-400  resize-none focus:outline-none "

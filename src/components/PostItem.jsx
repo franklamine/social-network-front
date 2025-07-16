@@ -3,13 +3,14 @@ import Comment from "./Comment.jsx";
 import React, {useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
+import {Link} from "react-router-dom";
 
 
-export default function PostItem({photoProfile, posts}) {
+export default function PostItem({getUserById, photoProfile, posts}) {
     const [showComment, setShowComment] = useState(false);
     const [indexPost, setIndexPost] = useState(null);
     const [likedPosts, setLikedPosts] = useState({});
-console.log(posts);
+    console.log(posts);
 
     const handleComment = (index) => {
 
@@ -35,8 +36,9 @@ console.log(posts);
                 <div key={index} className="bg-white rounded-2xl shadow mx-auto mb-3 ">
                     <div className="flex items-center gap-4 px-2 pt-2">
                         {post.photoAuteurPublication ?
-                            <img className="w-10 h-10 rounded-full object-cover" src={`${post.photoAuteurPublication}`} alt=""/> :
-                            <FaUserCircle className="w-10 h-10 text-gray-400" />
+                            <Link to={`/profile/${post.idAuteur}`} onClick={()=>getUserById(post.idAuteur)}><img className="w-10 h-10 rounded-full object-cover" src={`${post.photoAuteurPublication}`} alt=""/></Link> :
+                            <Link to={`/profile/${post.idAuteur}`} onClick={()=>getUserById(post.idAuteur)}><FaUserCircle className="w-10 h-10 text-gray-400"/></Link>
+
                         }
                         <div className="flex-1 flex items-center justify-between">{post.name}
                             <div>
@@ -85,7 +87,7 @@ console.log(posts);
                     </div>
 
                     {showComment && indexPost === index ?
-                        <Comment postId={post.id} setShowComment={setShowComment} photoProfile={photoProfile} /> : ""}
+                        <Comment posts={posts} postId={post.id} setShowComment={setShowComment} photoProfile={photoProfile} /> : ""}
                 </div>
             ))}
         </div>

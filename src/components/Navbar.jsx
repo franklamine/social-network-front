@@ -8,8 +8,17 @@ import {StoreContext} from "../context/StoreContext.jsx";
 
 export default function Navbar() {
 
-    const {connectedUser} = useContext(StoreContext);
-    const photoProfile = connectedUser?.profile?.photoProfile;
+    const {
+        getUserById,
+        userConnected,
+        navigate,
+        setAccessToken
+    } = useContext(StoreContext);
+
+    const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
+    const nomEtPrenomUserConnected = userConnected?.nom + " " + userConnected?.prenom;
+    const idUserConnected = userConnected?.id
+
 
     const [showAccount, setShowAccount] = useState(false);
 
@@ -19,7 +28,7 @@ export default function Navbar() {
             className=" fixed top-0 left-0 right-0 z-50 bg-gray-100 shadow sm:px-6 h-16 sm:h-auto  flex items-center justify-between ">
 
             <div className="flex items-center ml-4 gap-2">
-                <img className="w-10 h-10 rounded-full" src="logo.png" alt=""/>
+                <img className="w-10 h-10 rounded-full" src="/logo.png" alt=""/>
                 <div className="flex items-center sm:rounded-full sm:bg-gray-200 gap-2 sm:px-3 text-gray-400">
                     <p className="bg-gray-200 rounded-full p-3  cursor-pointer ">
                         <FaSearch className="w-4 h-4 "/>
@@ -62,29 +71,27 @@ export default function Navbar() {
                 </NavLink>
             </div>
 
-            <div className="flex gap-4 sm:gap-14 mr-4 text-gray-400">
+            <div className="flex items-center gap-4 sm:gap-14 mr-4 text-gray-400">
                 <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
-                    <FaBars className="w-4 h-4 sm:w-6 sm:h-6 "/>
+                    <FaBars className="w-4 h-4 sm:w-5 sm:h-5 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Menu</span>
                 </div>
                 <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
-                    <FaMessage className="w-4 h-4 sm:w-6 sm:h-6 "/>
+                    <FaMessage className="w-4 h-4 sm:w-5 sm:h-5 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Message</span>
                 </div>
                 <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
-                    <FaBell className="w-4 h-4 sm:w-6 sm:h-6 "/>
+                    <FaBell className="w-4 h-4 sm:w-5 sm:h-5 "/>
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Notifications</span>
                 </div>
                 <div onClick={() => setShowAccount(!showAccount)}
-                   className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
-                    {/*<img className="w-6 h-6 rounded-full object-cover" src="logo-min.png" alt=""/>*/}
-                    {/*<FaUser className="w-4 h-4 sm:w-6 sm:h-6 "/>*/}
-                    {photoProfile ?
-                        <img className="w-6 h-6 rounded-full object-cover" src={photoProfile} alt=""/> :
-                        <FaUserCircle className="w-4 h-4 text-gray-400" />
+                     className="relative group cursor-pointer ">
+                    {photoProfileUserConnected ?
+                        <img className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/> :
+                        <FaUserCircle className="w-10 h-10 "/>
                     }
                     <span
                         className="absolute left-1/2 -translate-x-1/2 top-full mt-2 text-sm bg-gray-700 text-gray-200 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition duration-200 whitespace-nowrap z-10">Account</span>
@@ -94,7 +101,9 @@ export default function Navbar() {
 
             {showAccount &&
                 <div className=" absolute sm:w-[300px] h-[400px] top-full  sm:right-4 ">
-                    <Account/>
+                    <Account navigate={navigate} setAccessToken={setAccessToken} idUserConnected={idUserConnected}
+                             getUserById={getUserById} photoProfileUserConnected={photoProfileUserConnected}
+                             nomEtPrenomUserConnected={nomEtPrenomUserConnected} setShowAccount={setShowAccount}/>
                 </div>
             }
 

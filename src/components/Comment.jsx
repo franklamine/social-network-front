@@ -5,9 +5,8 @@ import FormComment from "./FormComment.jsx";
 import {differenceInHours, formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 
-function Comment({postId, setShowComment, photoProfile}) {
+function Comment({posts, postId, setShowComment, photoProfile}) {
 
-    const {posts} = useContext(StoreContext);
 
     const post = posts.find(post => post.id === postId);
 
