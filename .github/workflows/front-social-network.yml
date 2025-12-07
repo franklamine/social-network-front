@@ -11,3 +11,9 @@ jobs:
     steps:
     - name: recuperation du code source
       uses: actions/checkout@v3
+
+    - name: utilisation de node js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
