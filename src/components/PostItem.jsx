@@ -6,7 +6,7 @@ import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
 
 
-export default function PostItem({getUserById, photoProfile, posts}) {
+export default function PostItem({nomEtPrenomUserConnected, getUserById, photoProfileUserConnected, posts, setPosts}) {
     const [showComment, setShowComment] = useState(false);
     const [indexPost, setIndexPost] = useState(null);
     const [likedPosts, setLikedPosts] = useState({});
@@ -33,8 +33,8 @@ export default function PostItem({getUserById, photoProfile, posts}) {
 
         <div>
             {posts.map((post, index) => (
-                <div key={index} className="bg-white rounded-2xl shadow mx-auto mb-3 ">
-                    <div className="flex items-center gap-4 px-2 pt-2">
+                <div key={index} className="bg-white rounded-2xl shadow w-full mb-3 ">
+                    <div className="flex items-center gap-4 px-4 pt-2">
                         {post.photoAuteurPublication ?
                             <Link to={`/profile/${post.idAuteur}`} onClick={()=>getUserById(post.idAuteur)}><img className="w-10 h-10 rounded-full object-cover" src={`${post.photoAuteurPublication}`} alt=""/></Link> :
                             <Link to={`/profile/${post.idAuteur}`} onClick={()=>getUserById(post.idAuteur)}><FaUserCircle className="w-10 h-10 text-gray-400"/></Link>
@@ -87,7 +87,7 @@ export default function PostItem({getUserById, photoProfile, posts}) {
                     </div>
 
                     {showComment && indexPost === index ?
-                        <Comment posts={posts} postId={post.id} setShowComment={setShowComment} photoProfile={photoProfile} /> : ""}
+                        <Comment nomEtPrenomUserConnected={nomEtPrenomUserConnected} posts={posts} setPosts={setPosts} postId={post.id} setShowComment={setShowComment} photoProfileUserConnected={photoProfileUserConnected} /> : ""}
                 </div>
             ))}
         </div>

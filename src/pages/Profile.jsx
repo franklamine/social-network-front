@@ -71,10 +71,10 @@ function Profile() {
     }, [id]);
 
     return (
-        <div className=" bg-gray-200">
+        <div className=" bg-gray-200 w-full ">
             <Navbar/>
-            <div className="bg-white shadow-lg">
-                <div className="relative mt-14 mx-auto sm:mx-[8%]">
+            <div className="bg-white shadow-lg  ">
+                <div className="relative mt-14 mx-0 sm:mx-[8%]">
 
                     {/*block photo de couverture*/}
                     <div className="h-52 sm:h-96 w-full sm:rounded-b-lg bg-gray-200">
@@ -172,9 +172,9 @@ function Profile() {
 
             </div>
 
-            <div className="mt-4 mx-auto sm:mx-[8%] flex gap-5">
+            <div className=" mt-4 mx-4 sm:mx-[8%] flex flex-col sm:flex-row gap-5">
 
-                <div className="w-[40%] sticky top-0 self-start flex flex-col gap-5 ">
+                <div className="w-full sm:w-[40%] sm:sticky sm:top-0 sm:self-start flex flex-col gap-5 ">
                     <div className="bg-white rounded-xl flex flex-col gap-5 p-4 ">
                         <h1 className="font-semibold text-xl">Intro</h1>
                         {user?.id === userConnected?.id && <button className=" bg-gray-200 w-full rounded py-1">Add bio</button>}
@@ -207,14 +207,14 @@ function Profile() {
                 </div>
 
                 {/*posts user connected*/}
-                <div className="flex-1 ">
+                <div className="sm:flex-1 ">
                     <FormPost photoProfileUserConnected={photoProfileUserConnected} />
-                    {isLoading ? "Chargement..." : <PostItem posts={postsUser} photoProfile={photoProfile} />}
+                    {isLoading ? "Chargement..." : <PostItem posts={postsUser} photoProfileUserConnected={photoProfileUserConnected} />}
                 </div>
 
             </div>
 
-            <div className=" mx-auto sm:mx-[8%]">
+            <div className="w-full mx-auto sm:mx-[8%]">
                 <p className="text-xs p-2">Privacy . Terms . Advertising . Add Choices . Cookies . More . Frank @ 2025</p>
             </div>
 

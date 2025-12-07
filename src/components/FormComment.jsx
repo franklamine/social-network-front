@@ -1,19 +1,16 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {useForm} from "react-hook-form";
 import customAxios from "../api/customAxios.js";
 import {toast} from "react-toastify";
 import {FaPaperPlane, FaUserCircle} from "react-icons/fa";
-import {StoreContext} from "../context/StoreContext.jsx";
 
-function FormComment({postId, photoProfile}) {
+function FormComment({setPosts, postId, photoProfileUserConnected, nomEtPrenomUserConnected}) {
 
-    const {getAllPost} = useContext(StoreContext);
 
     const {
         register,
         handleSubmit,
         reset,
-        formState: {errors},
     } = useForm();
 
     const onsubmit = async (data) => {
@@ -24,8 +21,19 @@ function FormComment({postId, photoProfile}) {
             })
             if (res.status === 201) {
                 toast.success("Comment successfully added");
+                const newComment = {
+                    PublicationId: postId,
+                    auteurComment: nomEtPrenomUserConnected,
+                    like: 0,
+                    message: data.message,
+                    photoAuteurComment: photoProfileUserConnected
+                };
+                setPosts((prevPosts) => prevPosts.map((post) => post.id === postId ? {
+                    ...post,
+                    comments: [...post.comments, newComment]
+                } : post));
+
                 reset();
-                getAllPost();
             }
         } catch (error) {
             console.log(error)
@@ -34,8 +42,8 @@ function FormComment({postId, photoProfile}) {
 
     return (
         <div className="flex gap-2 p-3 ">
-            {photoProfile ?
-                <img className="w-10 h-10 rounded-full object-cover" src={`${photoProfile}`} alt=""/> :
+            {photoProfileUserConnected ?
+                <img className="w-10 h-10 rounded-full object-cover" src={`${photoProfileUserConnected}`} alt=""/> :
                 <FaUserCircle className="w-10 h-10 text-gray-400"/>
             }
             <form onSubmit={handleSubmit(onsubmit)} className="flex-1">

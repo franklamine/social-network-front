@@ -5,13 +5,12 @@ import FormComment from "./FormComment.jsx";
 import {differenceInHours, formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 
-function Comment({posts, postId, setShowComment, photoProfile}) {
+function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConnected, nomEtPrenomUserConnected}) {
 
 
     const post = posts.find(post => post.id === postId);
 
     const comments = post.comments;
-    console.log(comments);
 
 
     return (
@@ -112,7 +111,7 @@ function Comment({posts, postId, setShowComment, photoProfile}) {
                             ))}
 
                             {/*Form to make et comment*/}
-                            <FormComment postId={postId} photoProfile={photoProfile} />
+                            <FormComment setPosts={setPosts} postId={postId} photoProfileUserConnected={photoProfileUserConnected} nomEtPrenomUserConnected={nomEtPrenomUserConnected} />
 
                         </div>
 
@@ -120,7 +119,7 @@ function Comment({posts, postId, setShowComment, photoProfile}) {
 
                 </div>
 
-                : <FormComment postId={postId}/>
+                : <FormComment posts={posts} setPosts={setPosts} postId={postId} photoProfileUserConnected={photoProfileUserConnected} nomEtPrenomUserConnected={nomEtPrenomUserConnected} />
 
             }
 

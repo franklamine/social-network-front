@@ -25,20 +25,22 @@ export default function Navbar() {
     return (
 
         <nav
-            className=" fixed top-0 left-0 right-0 z-50 bg-gray-100 shadow sm:px-6 h-16 sm:h-auto  flex items-center justify-between ">
+            className=" fixed top-0  w-full z-50 bg-gray-100 shadow sm:px-6 h-16 sm:h-auto  flex items-center justify-between ">
 
-            <div className="flex items-center ml-4 gap-2">
+            {/* LEFT - Logo + search */}
+            <div className="flex items-center  border  ml-4 gap-2">
                 <img className="w-10 h-10 rounded-full" src="/logo.png" alt=""/>
                 <div className="flex items-center sm:rounded-full sm:bg-gray-200 gap-2 sm:px-3 text-gray-400">
                     <p className="bg-gray-200 rounded-full p-3  cursor-pointer ">
                         <FaSearch className="w-4 h-4 "/>
                     </p>
                     <input className="hidden sm:block bg-gray-200 border-none outline-none" type="text"
-                           placeholder="Search . . ."/>
+                           placeholder="Search ..."/>
                 </div>
             </div>
 
-            <div className="hidden sm:flex  text-gray-400">
+            {/* CENTER - Icônes de navigation (cachées en mobile) */}
+            <div className="hidden sm:flex  border  text-gray-400">
                 <NavLink to="/"
                          className="relative group cursor-pointer hover:bg-gray-200  py-3 px-8 rounded transition duration-200">
                     <FaHome className="w-8 h-8 "/>
@@ -71,7 +73,8 @@ export default function Navbar() {
                 </NavLink>
             </div>
 
-            <div className="flex items-center gap-4 sm:gap-14 mr-4 text-gray-400">
+            {/* RIGHT - Menu, Message, Notifications, Avatar */}
+            <div className="flex items-center border gap-4 sm:gap-14 mr-4 text-gray-400">
                 <div className="relative group bg-gray-200 rounded-full p-3 cursor-pointer ">
                     <FaBars className="w-4 h-4 sm:w-5 sm:h-5 "/>
                     <span
