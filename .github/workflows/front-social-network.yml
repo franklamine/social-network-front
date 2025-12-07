@@ -3,7 +3,7 @@ name: deploment du frontend de social network
 on:
   push:
     branches:
-      - main:
+      - main
 jobs:
   recupere-projet:
     runs-on: ubuntu-latest
