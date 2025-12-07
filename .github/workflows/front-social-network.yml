@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -name: recuperation du code source
+    - name: recuperation du code source
       uses: actions/checkout@v3
