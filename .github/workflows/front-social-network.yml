@@ -36,7 +36,7 @@ jobs:
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           port: 22
           script: |
-            docker pull franklamine/social-network:1.0.0
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
             docker stop social-network || true
             docker rm social-network || true
-            docker run -d --restart unless-stopped -p 80:80 --name social-network franklamine/social-network:1.0.0
+            docker run -d --restart unless-stopped -p 80:80 --name social-network ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
