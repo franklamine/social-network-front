@@ -5,15 +5,21 @@ on:
     branches:
       - main
 jobs:
-  recupere-projet:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: recuperation du code source
-      uses: actions/checkout@v3
+      - name: checkout repository
+        uses: actions/checkout@v3
 
-    - name: utilisation de node js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Build and push docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1 .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1 
+      
