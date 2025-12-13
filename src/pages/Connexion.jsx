@@ -25,7 +25,7 @@ function Connexion() {
     const onSubmit = async (data) => {
         try {
 
-            const response = await  axios.post("http://localhost:8081/frank-api/utilisateurs/connexion", data)
+            const response = await  axios.post("http://api-social-network:8081/frank-api/utilisateurs/connexion", data)
 
             if (response.status === 200) {
 

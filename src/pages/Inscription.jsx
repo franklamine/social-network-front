@@ -15,7 +15,7 @@ function Inscription() {
     } = useForm();
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:8081/frank-api/utilisateurs/inscription", data)
+        axios.post("http://api-social-network:8081/frank-api/utilisateurs/inscription", data)
             .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
