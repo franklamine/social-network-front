@@ -20,7 +20,7 @@ function Inscription() {
                 console.log(response);
                 if (response.status === 201) {
                     toast.success(response.data, {position: "top-center"});
-                    navigate("/activation");
+                    navigate("/connexion");
                 }
             }).catch((error) => {
                 console.log(error);
