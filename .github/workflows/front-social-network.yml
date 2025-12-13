@@ -3,7 +3,7 @@ name: deploment du frontend de social network
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   Build:
     runs-on: ubuntu-latest
