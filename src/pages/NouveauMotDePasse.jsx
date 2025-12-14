@@ -17,7 +17,7 @@ function NouveauMotDePasse() {
     const motDePasse = watch("nouveauMotDePasse");
 
     const onSubmit = (data) => {
-        axios.post("http://api-social-network:8081/frank-api/utilisateurs/nouveau-mot-de-passe", data)
+        axios.post("/frank-api/utilisateurs/nouveau-mot-de-passe", data)
             .then((response) => {
                 if (response.status === 200) {
                     toast.success(response.data, {position: "top-center"});

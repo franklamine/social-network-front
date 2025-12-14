@@ -12,7 +12,7 @@ function MotDePasseOublier() {
     } = useForm();
 
     const onSubmit = (data) => {
-        axios.post("http://api-social-network:8081/frank-api/utilisateurs/mot-de-passe-oublier", data)
+        axios.post("/frank-api/utilisateurs/mot-de-passe-oublier", data)
             .then((response) => {
                 console.log(response);
                 if (response.status === 200) {

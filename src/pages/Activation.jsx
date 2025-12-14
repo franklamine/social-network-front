@@ -16,7 +16,7 @@ function Activation() {
     } = useForm();
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:8081/frank-api/utilisateurs/activation", data)
+        axios.post("/frank-api/utilisateurs/activation", data)
             .then((response) => {
                 if (response.status === 200) {
                     toast.success(response.data, {position: "top-center"});
@@ -32,7 +32,7 @@ function Activation() {
     };
 
     const demanderNouveauCode = () => {
-        axios.post("http://localhost:8081/frank-api/utilisateurs/nouveau-code")
+        axios.post("/frank-api/utilisateurs/nouveau-code")
             .then(() => {
                 toast.success("Un nouveau code a été envoyé à votre email.", {position: "top-center"});
                 setAfficherLienRenvoyer(false);
