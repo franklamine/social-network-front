@@ -22,21 +22,21 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1 .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1 
-      
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: Build
-#
-#    steps:
-#      - name: Deploy via SSH
-#        uses: appleboy/ssh-action@v0.1.9
-#        with:
-#          host: ${{ secrets.VPS_HOST }}
-#          username: ${{ secrets.VPS_USER }}
-#          key: ${{ secrets.VPS_PRIVATE_KEY }}
-#          port: 22
-#          script: |
-#            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
-#            docker stop social-network || true
-#            docker rm social-network || true
-#            docker run -d --restart unless-stopped -p 80:80 --name social-network ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: Build
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
+            docker stop social-network || true
+            docker rm social-network || true
+            docker run -d --restart unless-stopped -p 80:80 --name social-network ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
