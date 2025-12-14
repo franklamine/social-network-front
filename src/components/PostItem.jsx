@@ -51,13 +51,13 @@ export default function PostItem({nomEtPrenomUserConnected, getUserById, photoPr
                     </div>
                     <p className="px-2 text-sm">{post.message}</p>
 
-                    {post.photo && (
-                        <img src={post.photo} alt="photo" className="w-full"/>
+                    {post.urlPhoto && (
+                        <img src={post.urlPhoto} alt="photo" className="w-full"/>
                     )}
 
-                    {post.video && (
+                    {post.urlVideo && (
                         <video controls className="w-full ">
-                            <source src={post.video}/>
+                            <source src={post.urlVideo}/>
                             Votre navigateur ne supporte pas la lecture vidéo.
                         </video>
                     )}
