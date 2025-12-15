@@ -79,7 +79,7 @@ export default function FormPost({photoProfileUserConnected, getAllPost, idUserC
                 <hr className="bg-gray-200 h-[2px] "/>
                 <div className="flex items-center justify-around ">
                     <label
-                        className="flex items-center gap-2 px-10 py-2 rounded-lg hover:bg-gray-200 transition duration-200 cursor-pointer">
+                        className="flex items-center gap-2 px- py-2 rounded-lg hover:bg-gray-200 transition duration-200 cursor-pointer">
                         <FaVideo className="text-red-500"/>
                         <p>Video</p>
                         <input type="file" accept="video/*" multiple {...register("video")} className="hidden"/>
@@ -91,7 +91,7 @@ export default function FormPost({photoProfileUserConnected, getAllPost, idUserC
                         <input type="file" accept="image/*" multiple {...register("photos")} className="hidden"/>
                     </label>
                     <div
-                        className="flex items-center gap-2 px-10 py-2 rounded-lg hover:bg-gray-200 transition duration-200 cursor-pointer">
+                        className="flex items-center gap-2 px- py-2 rounded-lg hover:bg-gray-200 transition duration-200 cursor-pointer">
                         <FaSmile className="text-yellow-500"/>
                         <p>Feeling/activity</p>
                     </div>

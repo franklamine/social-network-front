@@ -18,12 +18,16 @@ function Layout() {
     }, [accessToken, navigate])
 
     return (
-            <div className="min-h-screen ">
+            <div className="min-h-screen">
                 <Navbar/>
                 <AsideGauche/>
                 <AsideDroite/>
-                <main className="absolute top-16 sm:left-[25%] sm:right-[25%] bottom-0 px-4 py-2 ">
-                    <Outlet/>
+                {/*<main className="absolute top-16 sm:left-[25%] sm:right-[25%] bottom-0 px-4 py-2 ">*/}
+                {/*    <Outlet/>*/}
+                {/*</main>*/}
+
+                <main className=" mt-16 box-border px-4 py-2 sm:mx-[25%] ">
+                    <Outlet />
                 </main>
             </div>
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const customAxios = axios.create({
-    baseURL: "/frank-api",
+    baseURL: "http://localhost:8081/frank-api",
 })
 
 customAxios.interceptors.request.use((config) => {
