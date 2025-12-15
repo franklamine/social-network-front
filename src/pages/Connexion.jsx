@@ -49,9 +49,9 @@ function Connexion() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#4679af]">
+        <div className="min-h-screen flex items-center justify-center bg-[#E5A3C5]">
             <div className="w-full max-w-md bg-[#f9fafb] rounded-lg shadow-lg p-8">
-                <h2 className="text-3xl font-bold text-center text-[#0d1b2a] mb-6">
+                <h2 className="text-3xl font-bold text-center text-[#8A2BE2] mb-6">
                     Connexion
                 </h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -110,7 +110,7 @@ function Connexion() {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-200"
+                        className="w-full bg-[#E5A3C5] text-[#8A2BE2] font-semibold py-2 rounded-md hover:bg-[#F9A3AA] transition duration-200"
                     >
                         Se connecter
                     </button>
