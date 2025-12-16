@@ -38,4 +38,4 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/social-network:0.0.1
             docker compose pull
-            docker compose up -d
+            docker compose up -d social-network-front

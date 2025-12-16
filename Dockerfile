@@ -17,7 +17,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Pour Let’s Encrypt challenge
-RUN mkdir -p /var/www/certbot
+#RUN mkdir -p /var/www/certbot
 
 EXPOSE 80
 
