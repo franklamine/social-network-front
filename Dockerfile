@@ -19,6 +19,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Pour Let’s Encrypt challenge
 RUN mkdir -p /var/www/certbot
 
-EXPOSE 80 443
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
