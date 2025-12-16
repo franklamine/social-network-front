@@ -8,9 +8,16 @@ RUN npm run build
 
 # Étape 2 : serveur Nginx pour servir l'application
 FROM nginx:alpine
+
+# Copier les fichiers construits
 COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copier le fichier de configuration Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+# Pour Let’s Encrypt challenge
+RUN mkdir -p /var/www/certbot
+
+EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
