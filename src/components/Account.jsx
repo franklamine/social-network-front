@@ -47,7 +47,7 @@ function Account({
                 </div>
                 <button className="flex items-center gap-2 mx-4 mt-3" onClick={() => logout(navigate, setAccessToken)}>
                     <FaSignOutAlt className="w-5 h-5"/>
-                    <span>Log Out</span>
+                    <span>Déconnexion</span>
                 </button>
                 <p className="mx-4 mt-10 text-xs">Privacy . Terms . Advertising . Add Choices . Cookies . More . Frank @
                     2025</p>

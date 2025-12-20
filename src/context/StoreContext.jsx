@@ -27,7 +27,6 @@ function StoreContextProvider({children}) {
     const getConnectedUser = async () => {
         try {
             const res = await customAxios.get(`/utilisateurs/connected`);
-            console.log(res);
             if (res.status === 200) {
                 setUserConnected(res.data);
             }
@@ -39,7 +38,6 @@ function StoreContextProvider({children}) {
     const getUserById = async (userId) => {
         try {
             const res = await customAxios.get(`/utilisateurs/${userId}`);
-            console.log(res);
             if (res.status === 200) {
                 setUser(res.data);
             }

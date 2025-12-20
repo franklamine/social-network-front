@@ -2,9 +2,11 @@ import {useForm} from "react-hook-form";
 import {Link, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import axios from "axios";
+import {useState} from "react";
 
 function Inscription() {
     const navigate = useNavigate(); // Initialisation de useNavigate
+    const [inscriptionEnCours, setInscriptionEnCours] = useState(false);
 
     const {
         register,
@@ -14,17 +16,24 @@ function Inscription() {
         reset,
     } = useForm();
 
-    const onSubmit = (data) => {
-        axios.post("/frank-api/utilisateurs/inscription", data)
-            .then((response) => {
-                console.log(response);
-                if (response.status === 201) {
-                    toast.success(response.data, {position: "top-center"});
-                    navigate("/activation");
-                }
-            }).catch((error) => {
-                console.log(error);
-            const message = error.response?.data?.message || "Erreur inattendue";
+    const onSubmit = async (data) => {
+        try {
+
+            if (inscriptionEnCours) {
+                return;
+            }
+            setInscriptionEnCours(true);
+
+            const res = await axios.post("/frank-api/utilisateurs/inscription", data);
+
+            if (res.status === 201) {
+                localStorage.setItem("emailActivationUtilisateur", data.email);
+                toast.success(res.data, {position: "top-center"});
+                navigate("/activation");
+            }
+
+        } catch (err) {
+            const message = err.response?.data?.message || "Erreur inattendue";
             toast.error(message, {position: "top-center"});
             // Réinitialiser les champs de mot de passe si l'enregistrement échoue
             reset({
@@ -32,8 +41,12 @@ function Inscription() {
                 motDePasse: "",
                 motDePasseConfirmation: "",
             });
-        })
+        } finally {
+            setInscriptionEnCours(false);
+        }
+
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#E5A3C5]">
@@ -163,6 +176,7 @@ function Inscription() {
 
                     <button
                         type="submit"
+                        disabled={inscriptionEnCours}
                         className="w-full bg-[#E5A3C5] text-[#8A2BE2] font-semibold py-2 rounded-md hover:bg-[#F9A3AA] transition duration-200"
                     >
                         S’inscrire

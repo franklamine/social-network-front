@@ -172,10 +172,10 @@ function Profile() {
 
             </div>
 
-            <div className=" mt-4 mx-4 sm:mx-[8%] flex flex-col sm:flex-row gap-5">
+            <div className=" mt-4 mx- sm:mx-[8%] flex flex-col sm:flex-row gap-5">
 
-                <div className="w-full sm:w-[40%] sm:sticky sm:top-0 sm:self-start flex flex-col gap-5 ">
-                    <div className="bg-white rounded-xl flex flex-col gap-5 p-4 ">
+                <div className="w-full sm:w-[40%] sm:sticky sm:top-0 sm:self-start flex flex-col gap-3 ">
+                    <div className="bg-white flex flex-col gap-5 p-4 ">
                         <h1 className="font-semibold text-xl">Intro</h1>
                         {user?.id === userConnected?.id && <button className=" bg-gray-200 w-full rounded py-1">Add bio</button>}
                         <p>lives in Quebec, Quebec</p>
@@ -183,12 +183,12 @@ function Profile() {
                         {user?.id === userConnected?.id && <button className=" bg-gray-200 w-full rounded py-1">Add featured</button>}
                     </div>
 
-                    <div className="bg-white rounded-xl flex justify-between p-4 ">
+                    <div className="bg-white flex justify-between p-4 ">
                         <button  className="font-semibold text-xl " >Photos</button>
                         <a  className=" ">See All photos</a>
                     </div>
 
-                    <div className="bg-white rounded-xl p-4 h-56 ">
+                    <div className="bg-white p-4 h-56 ">
                         <div className="flex justify-between">
                             <h1  className=" font-semibold text-xl " >Friends</h1>
                             <a  className=" ">See all friends</a>
@@ -196,7 +196,7 @@ function Profile() {
 
                     </div>
 
-                    <div className="bg-white rounded-xl p-4 h-96 ">
+                    <div className="bg-white p-4 h-96 ">
                         <div className="flex justify-between">
                             <h1  className=" font-semibold text-xl " >Life events</h1>
                             <a  className=" ">See all </a>

@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 
-export default function FormPost({photoProfileUserConnected, getAllPost, idUserConnected, getUserById}) {
+export default function FormPost({photoProfileUserConnected, getAllPost, setIsLoading}) {
 
 
     const {
@@ -18,58 +18,65 @@ export default function FormPost({photoProfileUserConnected, getAllPost, idUserC
     } = useForm();
 
 
-    const onSubmit = (data) => {
-        console.log(data);
-        if (!data.message.trim()) {
-            toast.error("La description est obligatoire");
-            return;
-        }
+    const onSubmit = async (data) => {
+        try {
 
-        const formData = new FormData();
-        formData.append("message", data.message);
+            if (!data.message.trim()) {
+                toast.error("La description est obligatoire");
+                return;
+            }
 
-        if (data.photos && data.photos.length > 0) {
-            formData.append("photo", data.photos[0]);
-        }
+            const formData = new FormData();
+            formData.append("message", data.message);
 
-        if (data.video && data.video.length > 0) {
-            formData.append("video", data.video[0]);
-        }
+            if (data.photos && data.photos.length > 0) {
+                formData.append("photo", data.photos[0]);
+            }
 
-        customAxios
-            .post("publications/publier", formData, {
+            if (data.video && data.video.length > 0) {
+                formData.append("video", data.video[0]);
+            }
+
+            const res = await customAxios.post("publications/publier", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
-            })
-            .then(() => {
+            });
+            setIsLoading(true);
+            console.log(res);
+            if (res.status === 201) {
+                setIsLoading(false);
                 getAllPost();
                 toast.success("Publication réussie !");
                 reset();
-            })
-            .catch((error) => {
-                console.error(error);
-                toast.error("Erreur lors de la publication.");
-            });
+            }
+
+        } catch (err) {
+            console.log(err);
+            toast.error("Erreur lors de la publication.");
+        }
+
     };
 
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-3 bg-white text-sm rounded-2xl p-4 mb-5">
+                  className="flex flex-col gap-3 bg-white text-sm p-4 mb-2">
                 <div className="flex items-center gap-4">
                     {photoProfileUserConnected ?
-                        <Link to={`/profile/${idUserConnected}`} onClick={() => getUserById(idUserConnected)}><img
-                            className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected}
-                            alt=""/></Link> :
-                        <Link to={`/profile/${idUserConnected}`} onClick={() => getUserById(idUserConnected)}><FaUserCircle
-                            className="w-10 h-10 text-gray-400"/></Link>
+                        // <Link to={`/profile/${idUserConnected}`}>
+                            <img className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/>
+                        // </Link>
+                        :
+                        // <Link to={`/profile/${idUserConnected}`}>
+                        <FaUserCircle className="w-10 h-10 text-gray-400"/>
+                        // </Link>
                     }
 
                     <textarea
                         {...register("message")}
                         className="rounded-2xl flex-1 bg-gray-200  p-2 text-gray-400  resize-none focus:outline-none "
-                        placeholder=" What's on your mind, Frank?"
+                        placeholder=" What's on your mind ?"
                         rows={1}
                     />
                     <button type="submit">

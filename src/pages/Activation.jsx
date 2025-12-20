@@ -7,6 +7,8 @@ import {useState} from "react";
 function Activation() {
     const navigate = useNavigate();
     const [afficherLienRenvoyer, setAfficherLienRenvoyer] = useState(false);
+    const emailActivationUtilisateur = localStorage.getItem("emailActivationUtilisateur");
+
 
     const {
         register,
@@ -31,15 +33,19 @@ function Activation() {
             });
     };
 
-    const demanderNouveauCode = () => {
-        axios.post("/frank-api/utilisateurs/nouveau-code")
-            .then(() => {
+    const demanderNouveauCode = async () => {
+        try {
+            const res = await axios.post("/frank-api/utilisateurs/nouveau-code", {email: emailActivationUtilisateur});
+            if(res.status === 200) {
                 toast.success("Un nouveau code a été envoyé à votre email.", {position: "top-center"});
-                setAfficherLienRenvoyer(false);
-            })
-            .catch(() => {
-                toast.error("Erreur lors de l’envoi du code.", {position: "top-center"});
-            });
+                setAfficherLienRenvoyer(false)
+            }
+
+        } catch (error) {
+            const message = error.response?.data?.message || "Erreur lors de l’envoi du code.";
+            toast.error(message, {position: "top-center"});
+        }
+
     };
 
     return (
