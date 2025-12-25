@@ -76,13 +76,13 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
 
                             <div className="flex justify-around text-gray-500 text-sm  px-2 py-1">
                                 <button
-                                    className="flex items-center gap-2 px-14 py-2  rounded hover:bg-gray-200 transition duration-200">
+                                    className="flex items-center gap-2 px-2 py-2  rounded hover:bg-gray-200 transition duration-200">
                                     <FaRegHeart className=" w-5 h-5"/> <span>Like</span></button>
                                 <button
-                                    className="flex items-center gap-2 px-14 py-2  rounded hover:bg-gray-200 transition duration-200">
+                                    className="flex items-center gap-2 px-2 py-2  rounded hover:bg-gray-200 transition duration-200">
                                     <FaRegComment className=" w-5 h-5"/> <span>Comment</span></button>
                                 <button
-                                    className="flex items-center gap-2 px-14 py-2 rounded  hover:bg-gray-200 transition duration-200">
+                                    className="flex items-center gap-2 px-2 py-2 rounded  hover:bg-gray-200 transition duration-200">
                                     <FaRegThumbsUp className=" w-5 h-5"/> <span>Share</span></button>
                             </div>
 
