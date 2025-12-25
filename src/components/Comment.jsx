@@ -24,7 +24,8 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                         className="fixed w-full sm:w-[50%] h-[500px] sm:h-[800px] mt-32 sm:mt-0 bg-white rounded-lg overflow-y-auto z-50">
 
                         {/*title */}
-                        <div className="sticky top-0 z-40 flex justify-between items-center border-b-2 border-gray-200 p-2">
+                        <div
+                            className="sticky top-0 z-40 flex justify-between items-center border-b-2 border-gray-200 p-2">
                             <h1></h1>
                             <h1 className="font-semibold ">{post.auteurPublication}{"'s"}{" "}Post</h1>
                             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 ">
@@ -36,7 +37,8 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                         <div className="bg-white rounded-2xl shadow mx-auto mb-3 ">
                             <div className="flex items-center gap-4 px-2 pt-2">
                                 {post.photoAuteurPublication ?
-                                    <img className="w-10 h-10 rounded-full object-cover" src={post.photoAuteurPublication}
+                                    <img className="w-10 h-10 rounded-full object-cover"
+                                         src={post.photoAuteurPublication}
                                          alt=""/> :
                                     <FaUserCircle className="w-10 h-10 text-gray-400"/>
                                 }
@@ -89,11 +91,12 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                             <hr className="bg-gray-200 h-[2px] mx-3 mb-2 "/>
 
                             {/*Comment list*/}
-                            {comments?.map((comment, index) => (
-                                <div key={index} className="">
+                            {comments?.map((comment) => (
+                                <div key={comment.id} className="">
                                     <div className="flex items-center gap-4 p-3 ">
                                         {comment.photoAuteurComment ?
-                                            <img className="w-10 h-10 rounded-full object-cover" src={comment.photoAuteurComment}
+                                            <img className="w-10 h-10 rounded-full object-cover"
+                                                 src={comment.photoAuteurComment}
                                                  alt=""/> :
                                             <FaUserCircle className="w-10 h-10 text-gray-400"/>
                                         }
@@ -103,7 +106,10 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4 ml-20 text-xs mt-[-10px]">
-                                        <p className="text-sm">{differenceInHours(new Date(), new Date(post.date))}h</p>
+                                        <p className="text-sm">{formatDistanceToNow(new Date(comment.date), {
+                                            addSuffix: true,
+                                            locale: fr
+                                        })}</p>
                                         <p>Like</p>
                                         <p>Reply</p>
                                     </div>
@@ -111,7 +117,9 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                             ))}
 
                             {/*Form to make et comment*/}
-                            <FormComment setPosts={setPosts} postId={postId} photoProfileUserConnected={photoProfileUserConnected} nomEtPrenomUserConnected={nomEtPrenomUserConnected} />
+                            <FormComment setPosts={setPosts} postId={postId}
+                                         photoProfileUserConnected={photoProfileUserConnected}
+                                         nomEtPrenomUserConnected={nomEtPrenomUserConnected}/>
 
                         </div>
 
@@ -119,7 +127,9 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
 
                 </div>
 
-                : <FormComment posts={posts} setPosts={setPosts} postId={postId} photoProfileUserConnected={photoProfileUserConnected} nomEtPrenomUserConnected={nomEtPrenomUserConnected} />
+                : <FormComment posts={posts} setPosts={setPosts} postId={postId}
+                               photoProfileUserConnected={photoProfileUserConnected}
+                               nomEtPrenomUserConnected={nomEtPrenomUserConnected}/>
 
             }
 

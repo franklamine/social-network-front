@@ -8,15 +8,15 @@ import {Link} from "react-router-dom";
 
 export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConnected, posts, setPosts}) {
     const [showComment, setShowComment] = useState(false);
-    const [indexPost, setIndexPost] = useState(null);
+    const [idPost, setIdPost] = useState(null);
     const [likedPosts, setLikedPosts] = useState({});
 
-    const handleComment = (index) => {
+    const handleComment = (id) => {
 
-        if (indexPost === index) {
+        if (idPost === id) {
             setShowComment(!showComment);
         } else {
-            setIndexPost(index);
+            setIdPost(id);
             setShowComment(true);
         }
     }
@@ -45,8 +45,8 @@ export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConn
     return (
 
         <div>
-            {posts.map((post, index) => (
-                <div key={index} className="bg-white shadow w-full ">
+            {posts.map((post) => (
+                <div key={post.id} className="bg-white shadow w-full ">
                     <div className="flex items-center gap-4 px-4 pt-2">
                         {post.photoAuteurPublication ?
                             <Link to={`/profile/${post.idAuteur}`}><img
@@ -99,7 +99,7 @@ export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConn
                             <FaRegHeart className=" w-5 h-5"/>
                             <span>Like</span>
                         </button>
-                        <button onClick={() => handleComment(index)}
+                        <button onClick={() => handleComment(post.id)}
                                 className="flex items-center gap-2 px-2 py-2  rounded hover:bg-gray-200 transition duration-200">
                             <FaRegComment className=" w-5 h-5"/>
                             <span>Comment</span>
@@ -111,7 +111,7 @@ export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConn
                         </button>
                     </div>
 
-                    {showComment && indexPost === index ?
+                    {showComment && idPost === post.id ?
                         <Comment nomEtPrenomUserConnected={nomEtPrenomUserConnected} posts={posts} setPosts={setPosts}
                                  postId={post.id} setShowComment={setShowComment}
                                  photoProfileUserConnected={photoProfileUserConnected}/> : ""}
