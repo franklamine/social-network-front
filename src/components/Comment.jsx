@@ -19,12 +19,12 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
 
             {comments.length > 0 ?
 
-                <div className="flex justify-center items-center bg-black fixed inset-0 bg-opacity-50 z-50 ">
+                <div className="flex justify-center sm:items-center bg-black fixed inset-0 bg-opacity-50 z-40 ">
                     <div
-                        className="fixed w-full sm:w-[50%] mx-4 sm:mx-auto h-[1100px] sm:h-[800px] bg-white rounded-lg overflow-y-auto">
+                        className="fixed w-full sm:w-[50%] -[1100px] sm:h-[800px] mt-32 sm:mt-0 bg-white rounded-lg overflow-y-auto z-50">
 
                         {/*title */}
-                        <div className=" flex justify-between items-center border-b-2 border-gray-200 p-2">
+                        <div className="sticky top-0 z-40 flex justify-between items-center border-b-2 border-gray-200 p-2">
                             <h1></h1>
                             <h1 className="font-semibold ">{post.auteurPublication}{"'s"}{" "}Post</h1>
                             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 ">
@@ -74,7 +74,7 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
 
                             <hr className="bg-gray-200 h-[2px] mx-3 "/>
 
-                            <div className="flex justify-around text-gray-500 text-sm  px-2 py-1 ">
+                            <div className="flex justify-around text-gray-500 text-sm  px-2 py-1">
                                 <button
                                     className="flex items-center gap-2 px-14 py-2  rounded hover:bg-gray-200 transition duration-200">
                                     <FaRegHeart className=" w-5 h-5"/> <span>Like</span></button>

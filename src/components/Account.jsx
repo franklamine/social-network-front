@@ -18,10 +18,16 @@ function Account({
                 <div className="rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 mx-3 ">
                     <div className="flex items-center gap-2 mb-3">
                         {photoProfileUserConnected ?
-                            <Link to={`/profile/${idUserConnected}`} onClick={() => {setShowAccount(false); getUserById(idUserConnected)}}><img
+                            <Link to={`/profile/${idUserConnected}`} onClick={() => {
+                                setShowAccount(false);
+                                getUserById(idUserConnected)
+                            }}><img
                                 className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/></Link> :
                             <Link to={`/profile/${idUserConnected}`}
-                                  onClick={() =>{setShowAccount(false); getUserById(idUserConnected)}}><FaUserCircle
+                                  onClick={() => {
+                                      setShowAccount(false);
+                                      getUserById(idUserConnected)
+                                  }}><FaUserCircle
                                 className="w-10 h-10 text-gray-400"/></Link>
                         }
                         <p>{nomEtPrenomUserConnected}</p>

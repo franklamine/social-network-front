@@ -25,7 +25,7 @@ export default function Navbar() {
     return (
 
         <nav
-            className=" fixed top-0  w-full z-50 bg-gray-100 shadow sm:px-6 h-16 sm:h-auto  flex items-center justify-between ">
+            className=" fixed top-0  w-full z-30 bg-gray-100 shadow sm:px-6 h-16 sm:h-auto  flex items-center justify-between ">
 
             {/* LEFT - Logo + search */}
             <div className="flex items-center ml-4 gap-2">

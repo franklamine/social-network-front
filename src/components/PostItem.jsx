@@ -1,6 +1,6 @@
 import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes, FaUserCircle} from "react-icons/fa";
 import Comment from "./Comment.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
@@ -20,6 +20,20 @@ export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConn
             setShowComment(true);
         }
     }
+
+//permet de blocker le scrrol du body lorsque le modal apparait
+    useEffect(() => {
+        if (showComment) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        //si le composant est demonté remet le scrool au body
+        return () => {
+            document.body.style.overflow = 'auto';
+        }
+    }, [showComment]);
+
 
     const handleLiked = (postId) => {
         setLikedPosts((prev) => ({

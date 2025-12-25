@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar.jsx";
 import {StoreContext} from "../context/StoreContext.jsx";
 import {FaCamera, FaChevronDown, FaEdit, FaEllipsisH, FaPlus} from "react-icons/fa";
 import customAxios from "../api/customAxios.js";
-import {useForm} from "react-hook-form";
 import FormPost from "../components/FormPost.jsx";
 import PostItem from "../components/PostItem.jsx";
 import {useParams} from "react-router-dom";
@@ -21,49 +20,48 @@ function Profile() {
 
     const photoCouverture = user?.profile?.photoCouverture;
 
-    const {
-        register,
-        handleSubmit,
-    } = useForm();
 
-    const handlePhotoCouverture = async (dataCouverture) => {
+    const uploadPhotoProfile = async (file) => {
+        if (!file) return;
 
         const formData = new FormData();
-
-        if (dataCouverture.photoCouv && dataCouverture.photoCouv.length > 0) {
-            formData.append("photoCouverture", dataCouverture.photoCouv[0]);
-        }
+        formData.append("photoProfile", file);
 
         try {
-            const res = customAxios.post("/profile/photo-couverture",
-                formData, {headers: {"Content-Type": "multipart/form-data",}})
-            console.log("response", res)
-            if((await res).status === 201) {
-                getUserById(id);
+            const res = await customAxios.post(
+                "/profile/photo-profile",
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+
+            if (res.status === 201) {
+                getUserById(id); // Rafraîchir les infos du profil
             }
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
-    const handlePhotoProfile = async (dataProfile) => {
+    const uploadPhotoCouverture = async (file) => {
+        if (!file) return;
 
         const formData = new FormData();
-        if (dataProfile.photoProf && dataProfile.photoProf.length > 0) {
-            formData.append("photoProfile", dataProfile.photoProf[0]);
-        }
+        formData.append("photoCouverture", file);
 
         try {
-            const res = customAxios.post("/profile/photo-profile",
-                formData, {headers: {"Content-Type": "multipart/form-data",}})
-            console.log(res)
-            if((await res).status === 201) {
-                getUserById(id);
+            const res = await customAxios.post(
+                "/profile/photo-couverture",
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+
+            if (res.status === 201) {
+                getUserById(id); // Rafraîchir les infos du profil
             }
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
 
     useEffect(() => {
@@ -73,7 +71,7 @@ function Profile() {
     return (
         <div className=" bg-gray-200 w-full ">
             <Navbar/>
-            <div className="bg-white shadow-lg  ">
+            <div className="bg-white shadow-lg ">
                 <div className="relative mt-14 mx-0 sm:mx-[8%]">
 
                     {/*block photo de couverture*/}
@@ -94,29 +92,37 @@ function Profile() {
                             }
                         </div>
 
-                        {/*block edition photo de couverture  */}
+                        {/* Formulaire pour photo de couverture */}
                         {user?.id === userConnected?.id && (
-                            <form onSubmit={handleSubmit(handlePhotoCouverture)}
-                                  className="absolute top-32 right-8 sm:top-80 sm:right-8 z-10 flex gap-2 items-center rounded-lg bg-white text-gray-700 px-6 py-3 sm:px-3 sm:py-2 ">
+                            <div className="absolute top-32 right-8 sm:top-80 sm:right-8 z-10 flex gap-2 items-center rounded-lg bg-white text-gray-700 px-6 py-3 sm:px-3 sm:py-2">
                                 <label className="cursor-pointer">
-                                    <input type="file" accept="image/*"  {...register("photoCouv")} className="hidden"/>
-                                    <FaCamera className="w-7 h-7 sm:w-auto sm:h-auto"/>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => uploadPhotoCouverture(e.target.files[0])}
+                                    />
+                                    <FaCamera className="w-7 h-7 sm:w-auto sm:h-auto" />
                                 </label>
-                                <button type="submit" className="hidden sm:block">Edit Cover photo</button>
-                            </form>
+                                <span className="hidden sm:block">Edit Cover photo</span>
+                            </div>
                         )}
 
-                        {/*block edition photo de profile */}
+                        {/* Formulaire pour photo de profil */}
                         {user?.id === userConnected?.id && (
-                            <form onSubmit={handleSubmit(handlePhotoProfile)}
-                                  className="absolute h-14 w-14 rounded-full top-56 right-36 sm:top-[440px] sm:left-36 z-20 flex items-center justify-center bg-white text-gray-700 ">
+                            <div className="absolute h-14 w-14 rounded-full top-56 right-36 sm:top-[440px] sm:left-36 z-20 flex items-center justify-center bg-white text-gray-700">
                                 <label className="cursor-pointer">
-                                    <input type="file" accept="image/*"  {...register("photoProf")} className="hidden"/>
-                                    <FaCamera className=" w-7 h-7"/>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => uploadPhotoProfile(e.target.files[0])}
+                                    />
+                                    <FaCamera className="w-7 h-7" />
                                 </label>
-                                <button type="submit" className="hidden sm:block">SE</button>
-                            </form>
+                            </div>
                         )}
+
 
                         {/*Infos profiles*/}
                         <div
