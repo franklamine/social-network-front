@@ -1,8 +1,7 @@
 import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes, FaUserCircle} from "react-icons/fa";
-import {StoreContext} from "../context/StoreContext.jsx";
-import React, {useContext} from "react";
+import React from "react";
 import FormComment from "./FormComment.jsx";
-import {differenceInHours, formatDistanceToNow, parseISO} from "date-fns";
+import { formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 
 function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConnected}) {
@@ -44,7 +43,7 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                                 }
                                 <div className="flex-1">
                                     <h3 className="font-semibold text-sm ">{post.auteurPublication}</h3>
-                                    <h4 className="text-xs">{formatDistanceToNow(parseISO(post.date), {
+                                    <h4 className="text-xs">{formatDistanceToNow(new Date(post.date), {
                                         addSuffix: true,
                                         locale: fr
                                     })}</h4>
@@ -106,7 +105,7 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4 ml-20 text-xs mt-[-10px]">
-                                        <p className="text-sm">{formatDistanceToNow(parseISO(comment.date), {
+                                        <p className="text-sm">{formatDistanceToNow(new Date(comment.date), {
                                             addSuffix: true,
                                             locale: fr
                                         })}</p>
