@@ -21,7 +21,7 @@ function Comment({posts, setPosts, postId, setShowComment, photoProfileUserConne
 
                 <div className="flex justify-center sm:items-center bg-black fixed inset-0 bg-opacity-50 z-40 ">
                     <div
-                        className="fixed w-full sm:w-[50%] -[1100px] sm:h-[800px] mt-32 sm:mt-0 bg-white rounded-lg overflow-y-auto z-50">
+                        className="fixed w-full sm:w-[50%] h-[600px] sm:h-[800px] mt-32 sm:mt-0 bg-white rounded-lg overflow-y-auto z-50">
 
                         {/*title */}
                         <div className="sticky top-0 z-40 flex justify-between items-center border-b-2 border-gray-200 p-2">
