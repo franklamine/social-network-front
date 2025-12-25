@@ -4,7 +4,7 @@ import customAxios from "../api/customAxios.js";
 import {toast} from "react-toastify";
 import {FaPaperPlane, FaUserCircle} from "react-icons/fa";
 
-function FormComment({setPosts, postId, photoProfileUserConnected, nomEtPrenomUserConnected}) {
+function FormComment({setPosts, postId, photoProfileUserConnected}) {
 
 
     const {
@@ -21,16 +21,11 @@ function FormComment({setPosts, postId, photoProfileUserConnected, nomEtPrenomUs
             })
             if (res.status === 201) {
                 toast.success("Comment successfully added");
-                const newComment = {
-                    PublicationId: postId,
-                    auteurComment: nomEtPrenomUserConnected,
-                    like: 0,
-                    message: data.message,
-                    photoAuteurComment: photoProfileUserConnected
-                };
+                const savedComment = res.data;
+
                 setPosts((prevPosts) => prevPosts.map((post) => post.id === postId ? {
                     ...post,
-                    comments: [...post.comments, newComment]
+                    comments: [...post.comments, savedComment]
                 } : post));
 
                 reset();

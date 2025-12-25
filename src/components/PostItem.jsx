@@ -6,7 +6,7 @@ import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
 
 
-export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConnected, posts, setPosts}) {
+export default function PostItem({photoProfileUserConnected, posts, setPosts}) {
     const [showComment, setShowComment] = useState(false);
     const [idPost, setIdPost] = useState(null);
     const [likedPosts, setLikedPosts] = useState({});
@@ -112,7 +112,7 @@ export default function PostItem({nomEtPrenomUserConnected, photoProfileUserConn
                     </div>
 
                     {showComment && idPost === post.id ?
-                        <Comment nomEtPrenomUserConnected={nomEtPrenomUserConnected} posts={posts} setPosts={setPosts}
+                        <Comment  posts={posts} setPosts={setPosts}
                                  postId={post.id} setShowComment={setShowComment}
                                  photoProfileUserConnected={photoProfileUserConnected}/> : ""}
                 </div>
