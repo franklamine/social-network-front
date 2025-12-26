@@ -17,7 +17,9 @@ function Home() {
         setLikedPosts,
         isLoading,
         setIsLoading,
-        getAllPost
+        getAllPost,
+        followersUsers,
+        setFollowersUsers
     } = useContext(StoreContext);
 
     const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
@@ -36,7 +38,9 @@ function Home() {
                       getAllPost={getAllPost} idUserConnected={idUserConnected} getUserById={getUserById}/>
             {isLoading ? "Chargement..." :
                 <PostItem getUserById={getUserById} posts={posts} setPosts={setPosts} likedPosts={likedPosts}
-                          setLikedPosts={setLikedPosts} photoProfileUserConnected={photoProfileUserConnected}/>}
+                          idUserConnected={idUserConnected} setLikedPosts={setLikedPosts}
+                          followersUsers={followersUsers}
+                          setFollowersUsers={setFollowersUsers} photoProfileUserConnected={photoProfileUserConnected}/>}
         </div>
     )
 }

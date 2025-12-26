@@ -4,10 +4,20 @@ import React, {useEffect, useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
-import customAxios from "../api/customAxios.js";
+import {handleFollow} from "../utils-fonctions/handleFollow.js";
+import {handleUnFollow} from "../utils-fonctions/handleUnFollow.js";
+import {handleLiked} from "../utils-fonctions/handleLiked.js";
 
-
-export default function PostItem({photoProfileUserConnected, posts, setPosts, likedPosts, setLikedPosts}) {
+export default function PostItem({
+                                     photoProfileUserConnected,
+                                     posts,
+                                     setPosts,
+                                     likedPosts,
+                                     setLikedPosts,
+                                     idUserConnected,
+                                     followersUsers,
+                                     setFollowersUsers
+                                 }) {
     const [showComment, setShowComment] = useState(false);
     const [idPost, setIdPost] = useState(null);
 
@@ -35,22 +45,6 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts, li
     }, [showComment]);
 
 
-    const handleLiked = async (postId) => {
-        try {
-            const res = await customAxios.post("/likeposts/" + postId);
-            if (res.status === 200) {
-
-                setLikedPosts((prev) => ({...prev, [postId]: !prev[postId]}));
-
-                setPosts(prev => prev.map(p => p.id === postId ? {...p, likeCount: res.data} : p));
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-
     return (
 
         <div>
@@ -66,7 +60,15 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts, li
                         }
                         <div className="flex-1 flex items-center justify-between">{post.name}
                             <div>
-                                <h3 className="font-semibold text-sm ">{post.auteurPublication}</h3>
+                                <h3 className="font-semibold text-sm ">{post.auteurPublication}
+                                    {post.idAuteur !== idUserConnected ? (
+                                        !followersUsers[post.idAuteur] ?
+                                            <button onClick={() => handleFollow(post.idAuteur, setFollowersUsers)}
+                                                    className={"ml-2 px-2 text-white border rounded bg-[#8A2BE2]"}>suivre</button>
+                                            : <button onClick={() => handleUnFollow(post.idAuteur, setFollowersUsers)}
+                                                      className={"ml-2 text-blue-500"}>suivis</button>
+                                    ) : null}
+                                </h3>
                                 <h4 className="text-xs">{formatDistanceToNow(new Date(post.date), {
                                     addSuffix: true,
                                     locale: fr
@@ -103,7 +105,7 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts, li
 
                     <div className="flex justify-around text-gray-500 text-sm  px-2 py-1 border ">
                         <button
-                            onClick={() => handleLiked(post.id)}
+                            onClick={() => handleLiked(post.id,setLikedPosts, setPosts)}
                             className={`${likedPosts[post.id] ? "text-blue-500" : ""} flex items-center gap-2 px-2 py-2  rounded hover:bg-gray-200 transition duration-200`}>
                             <FaRegHeart className=" w-5 h-5"/>
                             <span>Like</span>

@@ -15,6 +15,7 @@ function StoreContextProvider({children}) {
     const [isLoading, setIsLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
     const [likedPosts, setLikedPosts] = useState({});
+    const [followersUsers, setFollowersUsers] = useState({});
 
 
     useEffect(() => {
@@ -64,11 +65,17 @@ function StoreContextProvider({children}) {
             if (response.status === 200) {
                 setPosts(response.data);
                 //initialise l'etat des postes liké par par l'utilisateur connecter
-                const liked = {};
+                const likers = {};
                 response.data.forEach((post) => {
-                    liked[post.id] = post.likedByConnectedUser;
+                    likers[post.id] = post.isLikedByConnectedUser; //boolean
                 })
-                setLikedPosts(liked);
+                setLikedPosts(likers);
+
+                const followers = {};
+                response.data.forEach((post) => {
+                    followers[post.idAuteur] = post.authorIsFollowByUserConnected //boolean
+                })
+                setFollowersUsers(followers);
             }
         } catch (error) {
             console.log("Impossible de charger les publications." + error.message);
@@ -87,7 +94,7 @@ function StoreContextProvider({children}) {
     const value = {
         user, userConnected, navigate, posts, setPosts, isLoading, setIsLoading,
         accessToken, setAccessToken, getAllPost, getUserById, getConnectedUser,
-        likedPosts, setLikedPosts,
+        likedPosts, setLikedPosts, followersUsers, setFollowersUsers
     }
 
     return (
