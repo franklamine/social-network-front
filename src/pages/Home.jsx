@@ -7,7 +7,18 @@ import {FaPhotoVideo, FaSmile} from "react-icons/fa";
 
 function Home() {
 
-    const {getUserById, userConnected, accessToken, posts, setPosts, isLoading, setIsLoading, getAllPost} = useContext(StoreContext);
+    const {
+        getUserById,
+        userConnected,
+        accessToken,
+        posts,
+        setPosts,
+        likedPosts,
+        setLikedPosts,
+        isLoading,
+        setIsLoading,
+        getAllPost
+    } = useContext(StoreContext);
 
     const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
     const idUserConnected = userConnected?.id
@@ -21,8 +32,11 @@ function Home() {
 
     return (
         <div>
-            <FormPost setIsLoading={setIsLoading} photoProfileUserConnected={photoProfileUserConnected}  getAllPost={getAllPost} idUserConnected={idUserConnected} getUserById={getUserById}/>
-            {isLoading ? "Chargement..." : <PostItem getUserById={getUserById} posts={posts} setPosts={setPosts} photoProfileUserConnected={photoProfileUserConnected} />}
+            <FormPost setIsLoading={setIsLoading} photoProfileUserConnected={photoProfileUserConnected}
+                      getAllPost={getAllPost} idUserConnected={idUserConnected} getUserById={getUserById}/>
+            {isLoading ? "Chargement..." :
+                <PostItem getUserById={getUserById} posts={posts} setPosts={setPosts} likedPosts={likedPosts}
+                          setLikedPosts={setLikedPosts} photoProfileUserConnected={photoProfileUserConnected}/>}
         </div>
     )
 }

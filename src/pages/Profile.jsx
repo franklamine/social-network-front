@@ -11,7 +11,7 @@ function Profile() {
 
     const {id} = useParams();
 
-    const {user, userConnected, getUserById, posts, isLoading } = useContext(StoreContext);
+    const {user, userConnected, getUserById, posts,likedPosts, setLikedPosts, isLoading } = useContext(StoreContext);
 
     const postsUser = posts.filter(post => post.auteurPublication === user.nom + " " + user.prenom)
 
@@ -215,7 +215,7 @@ function Profile() {
                 {/*posts user connected*/}
                 <div className="sm:flex-1 ">
                     <FormPost photoProfileUserConnected={photoProfileUserConnected} />
-                    {isLoading ? "Chargement..." : <PostItem posts={postsUser} photoProfileUserConnected={photoProfileUserConnected} />}
+                    {isLoading ? "Chargement..." : <PostItem posts={postsUser} likedPosts={likedPosts} setLikedPosts={setLikedPosts} photoProfileUserConnected={photoProfileUserConnected} />}
                 </div>
 
             </div>

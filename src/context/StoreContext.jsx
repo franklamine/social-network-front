@@ -14,6 +14,8 @@ function StoreContextProvider({children}) {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [accessToken, setAccessToken] = useState("");
+    const [likedPosts, setLikedPosts] = useState({});
+
 
     useEffect(() => {
         const tokens = localStorage.getItem("token");
@@ -30,7 +32,7 @@ function StoreContextProvider({children}) {
             if (res.status === 200) {
                 setUserConnected(res.data);
             }
-        }catch (error) {
+        } catch (error) {
             console.log(error);
         }
     }
@@ -41,7 +43,7 @@ function StoreContextProvider({children}) {
             if (res.status === 200) {
                 setUser(res.data);
             }
-        }catch (error) {
+        } catch (error) {
             console.log(error);
         }
     }
@@ -61,6 +63,12 @@ function StoreContextProvider({children}) {
             const response = await customAxios.get(`/publications`);
             if (response.status === 200) {
                 setPosts(response.data);
+                //initialise l'etat des postes liké par par l'utilisateur connecter
+                const liked = {};
+                response.data.forEach((post) => {
+                    liked[post.id] = post.likedByConnectedUser;
+                })
+                setLikedPosts(liked);
             }
         } catch (error) {
             console.log("Impossible de charger les publications." + error.message);
@@ -78,7 +86,8 @@ function StoreContextProvider({children}) {
 
     const value = {
         user, userConnected, navigate, posts, setPosts, isLoading, setIsLoading,
-        accessToken, setAccessToken, getAllPost, getUserById, getConnectedUser
+        accessToken, setAccessToken, getAllPost, getUserById, getConnectedUser,
+        likedPosts, setLikedPosts,
     }
 
     return (

@@ -4,12 +4,12 @@ import React, {useEffect, useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
+import customAxios from "../api/customAxios.js";
 
 
-export default function PostItem({photoProfileUserConnected, posts, setPosts}) {
+export default function PostItem({photoProfileUserConnected, posts, setPosts, likedPosts, setLikedPosts}) {
     const [showComment, setShowComment] = useState(false);
     const [idPost, setIdPost] = useState(null);
-    const [likedPosts, setLikedPosts] = useState({});
 
     const handleComment = (id) => {
 
@@ -35,12 +35,21 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts}) {
     }, [showComment]);
 
 
-    const handleLiked = (postId) => {
-        setLikedPosts((prev) => ({
-            ...prev,
-            [postId]: !prev[postId],
-        }));
+    const handleLiked = async (postId) => {
+        try {
+            const res = await customAxios.post("/likeposts/" + postId);
+            if (res.status === 200) {
+
+                setLikedPosts((prev) => ({...prev, [postId]: !prev[postId]}));
+
+                setPosts(prev => prev.map(p => p.id === postId ? {...p, likeCount: res.data} : p));
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     };
+
 
     return (
 
@@ -82,11 +91,11 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts}) {
                     <div className="flex items-center justify-between text-sm px-4 py-2 ">
                         <div className="flex items-center gap-2 ">
                             <FaThumbsUp className="text-blue-500"/>
-                            <span>22</span>
+                            <span>{post.likeCount}</span>
                         </div>
                         <div className="flex items-center gap-4 ">
                             <p>{post.comments.length} Comments</p>
-                            <p>1 Share</p>
+                            <p>0 Share</p>
                         </div>
                     </div>
 
@@ -112,7 +121,7 @@ export default function PostItem({photoProfileUserConnected, posts, setPosts}) {
                     </div>
 
                     {showComment && idPost === post.id ?
-                        <Comment  posts={posts} setPosts={setPosts}
+                        <Comment posts={posts} setPosts={setPosts}
                                  postId={post.id} setShowComment={setShowComment}
                                  photoProfileUserConnected={photoProfileUserConnected}/> : ""}
                 </div>
