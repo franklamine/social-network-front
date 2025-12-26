@@ -130,9 +130,9 @@ function Profile() {
                             <div className="my-5 sm:my-0">
                                 <div className="font-bold text-3xl">{user.nom}{" "}{user.prenom}</div>
                                 <div className="flex gap-5">
-                                    <p className="sm:text-start">556 Suivis</p>
-                                    <p className="sm:text-start">224 Followers</p>
-                                    <p className="sm:text-start">22 Likes</p>
+                                    <p className="sm:text-start">0 Suivis</p>
+                                    <p className="sm:text-start">0 Followers</p>
+                                    <p className="sm:text-start">{user.totalLikes}Likes</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 ">
