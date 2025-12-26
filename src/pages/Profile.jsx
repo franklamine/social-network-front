@@ -132,7 +132,7 @@ function Profile() {
                                 <div className="flex gap-5">
                                     <p className="sm:text-start">0 Suivis</p>
                                     <p className="sm:text-start">0 Followers</p>
-                                    <p className="sm:text-start">{user.totalLikes}Likes</p>
+                                    <p className="sm:text-start">{user.totalLikes} Likes</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 ">
