@@ -5,10 +5,9 @@ import {StoreContext} from "../context/StoreContext.jsx";
 import {FaVideo} from "react-icons/fa6";
 import {FaPhotoVideo, FaSmile} from "react-icons/fa";
 
-function Home() {
+function GlobalPost() {
 
     const {
-        getUserById,
         userConnected,
         accessToken,
         posts,
@@ -35,14 +34,15 @@ function Home() {
     return (
         <div>
             <FormPost setIsLoading={setIsLoading} photoProfileUserConnected={photoProfileUserConnected}
-                      getAllPost={getAllPost} idUserConnected={idUserConnected} getUserById={getUserById}/>
+                      getAllPost={getAllPost}/>
+
             {isLoading ? "Chargement..." :
-                <PostItem getUserById={getUserById} posts={posts} setPosts={setPosts} likedPosts={likedPosts}
-                          idUserConnected={idUserConnected} setLikedPosts={setLikedPosts}
-                          followersUsers={followersUsers}
+                <PostItem posts={posts} setPosts={setPosts} likedPosts={likedPosts} idUserConnected={idUserConnected}
+                          setLikedPosts={setLikedPosts} followersUsers={followersUsers}
                           setFollowersUsers={setFollowersUsers} photoProfileUserConnected={photoProfileUserConnected}/>}
         </div>
     )
 }
 
-export default Home
+
+export default GlobalPost

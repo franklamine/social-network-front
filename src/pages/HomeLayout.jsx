@@ -6,7 +6,7 @@ import {Outlet} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {StoreContext} from "../context/StoreContext.jsx";
 
-function Layout() {
+function HomeLayout() {
 
     const {navigate, accessToken} = useContext(StoreContext);
 
@@ -31,4 +31,4 @@ function Layout() {
     )
 }
 
-export default Layout;
+export default HomeLayout;

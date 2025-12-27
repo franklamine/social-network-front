@@ -64,13 +64,8 @@ export default function FormPost({photoProfileUserConnected, getAllPost, setIsLo
                   className="flex flex-col gap-3 bg-white text-sm p-4 mb-2">
                 <div className="flex items-center gap-4">
                     {photoProfileUserConnected ?
-                        // <Link to={`/profile/${idUserConnected}`}>
-                            <img className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/>
-                        // </Link>
-                        :
-                        // <Link to={`/profile/${idUserConnected}`}>
+                        <img className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/> :
                         <FaUserCircle className="w-10 h-10 text-gray-400"/>
-                        // </Link>
                     }
 
                     <textarea
