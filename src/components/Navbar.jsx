@@ -8,16 +8,7 @@ import {StoreContext} from "../context/StoreContext.jsx";
 
 export default function Navbar() {
 
-    const {
-        getUserById,
-        userConnected,
-        navigate,
-        setAccessToken
-    } = useContext(StoreContext);
-
-    const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
-    const nomEtPrenomUserConnected = userConnected?.nom + " " + userConnected?.prenom;
-    const idUserConnected = userConnected?.id
+    const {userConnected} = useContext(StoreContext);
 
 
     const [showAccount, setShowAccount] = useState(false);
@@ -92,8 +83,8 @@ export default function Navbar() {
                 </div>
                 <div onClick={() => setShowAccount(!showAccount)}
                      className="relative group cursor-pointer ">
-                    {photoProfileUserConnected ?
-                        <img className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/> :
+                    {userConnected?.userProfile ?
+                        <img className="w-10 h-10 rounded-full object-cover" src={userConnected?.userProfile} alt=""/> :
                         <FaUserCircle className="w-10 h-10 "/>
                     }
                     <span
@@ -104,9 +95,7 @@ export default function Navbar() {
 
             {showAccount &&
                 <div className=" absolute sm:w-[300px] h-[400px] top-full  sm:right-4 ">
-                    <Account navigate={navigate} setAccessToken={setAccessToken} idUserConnected={idUserConnected}
-                             getUserById={getUserById} photoProfileUserConnected={photoProfileUserConnected}
-                             nomEtPrenomUserConnected={nomEtPrenomUserConnected} setShowAccount={setShowAccount}/>
+                    <Account setShowAccount={setShowAccount}/>
                 </div>
             }
 

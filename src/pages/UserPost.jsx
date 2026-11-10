@@ -2,50 +2,28 @@ import React, {useContext, useEffect} from 'react'
 import FormPost from "../components/FormPost.jsx";
 import PostItem from "../components/PostItem.jsx";
 import {StoreContext} from "../context/StoreContext.jsx";
-import {FaVideo} from "react-icons/fa6";
-import {FaPhotoVideo, FaSmile} from "react-icons/fa";
-
-function GlobalPost() {
-
-    const {
-        user,
-        userConnected,
-        accessToken,
-        posts,
-        setPosts,
-        likedPosts,
-        setLikedPosts,
-        isLoading,
-        setIsLoading,
-        getAllPost,
-        followersUsers,
-        setFollowersUsers
-    } = useContext(StoreContext);
+import {useParams} from "react-router-dom";
 
 
-    const postsUser = posts.filter(post => post.auteurPublication === user.nom + " " + user.prenom)
-    const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
-    const idUserConnected = userConnected?.id
+function UserPost() {
 
+    const {id} = useParams();
+    const {isLoading, accessToken, postsUser, getAllPostByUserId} = useContext(StoreContext);
 
     useEffect(() => {
         if (accessToken) {
-            getAllPost();
+            getAllPostByUserId(id)
         }
     }, [accessToken]);
 
     return (
         <div>
-            <FormPost setIsLoading={setIsLoading} photoProfileUserConnected={photoProfileUserConnected}
-                      getAllPost={getAllPost}/>
+            <FormPost/>
 
-            {isLoading ? "Chargement..." :
-                <PostItem posts={postsUser} setPosts={setPosts} likedPosts={likedPosts} idUserConnected={idUserConnected}
-                          setLikedPosts={setLikedPosts} followersUsers={followersUsers}
-                          setFollowersUsers={setFollowersUsers} photoProfileUserConnected={photoProfileUserConnected}/>}
+            {isLoading ? "Chargement..." : <PostItem posts={postsUser}/>}
         </div>
     )
 }
 
 
-export default GlobalPost
+export default UserPost

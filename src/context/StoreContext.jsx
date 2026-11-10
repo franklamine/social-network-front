@@ -8,29 +8,36 @@ export const StoreContext = createContext(null);
 
 function StoreContextProvider({children}) {
 
-    const [user, setUser] = useState({});
+
+    const [accessToken, setAccessToken] = useState(() => {
+        const tokens = JSON.parse(localStorage.getItem("token") || "null");
+        return tokens?.accessToken || "";
+    });
+    const [userProfile, setUserProfile] = useState({});
     const [userConnected, setUserConnected] = useState({});
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [postsUser, setPostUser] = useState([]);
+    const [commentsUser, setCommentsUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [accessToken, setAccessToken] = useState("");
     const [likedPosts, setLikedPosts] = useState({});
     const [followersUsers, setFollowersUsers] = useState({});
 
 
     useEffect(() => {
-        const tokens = localStorage.getItem("token");
-        if (tokens) {
-            const accessToken = JSON.parse(tokens).accessToken;
-            setAccessToken(accessToken);
+        if (accessToken) {
+            getUserConnected();
+            getAllPost();
         }
-    }, []);
+    }, [accessToken]);
+
 
     //get connected user
-    const getConnectedUser = async () => {
+    const getUserConnected = async () => {
         try {
             const res = await customAxios.get(`/utilisateurs/connected`);
             if (res.status === 200) {
+                console.log(res.data)
                 setUserConnected(res.data);
             }
         } catch (error) {
@@ -38,23 +45,16 @@ function StoreContextProvider({children}) {
         }
     }
 
-    const getUserById = async (userId) => {
+    const getUserProfileById = async (userId) => {
         try {
             const res = await customAxios.get(`/utilisateurs/${userId}`);
             if (res.status === 200) {
-                setUser(res.data);
+                setUserProfile(res.data);
             }
         } catch (error) {
             console.log(error);
         }
     }
-
-
-    useEffect(() => {
-        if (accessToken) {
-            getConnectedUser();
-        }
-    }, [accessToken])
 
 
     // To get all post
@@ -63,17 +63,18 @@ function StoreContextProvider({children}) {
         try {
             const response = await customAxios.get(`/publications`);
             if (response.status === 200) {
+                console.log(response.data);
                 setPosts(response.data);
                 //initialise l'etat des postes liké par par l'utilisateur connecter
                 const likers = {};
                 response.data.forEach((post) => {
-                    likers[post.id] = post.isLikedByConnectedUser; //boolean
+                    likers[post.id] = post.isLiked; //boolean
                 })
                 setLikedPosts(likers);
 
                 const followers = {};
                 response.data.forEach((post) => {
-                    followers[post.idAuteur] = post.authorIsFollowByUserConnected //boolean
+                    followers[post.idAuthor] = post.isFollowingAuthor //boolean
                 })
                 setFollowersUsers(followers);
             }
@@ -84,17 +85,67 @@ function StoreContextProvider({children}) {
         }
     }
 
-    useEffect(() => {
-        if (accessToken) {
-            getAllPost();
+
+    // To get all post by userId
+    const getAllPostByUserId = async (userId) => {
+        console.log(userId);
+        setIsLoading(true);
+        try {
+            const response = await customAxios.get(`/publications/utilisateur/${userId}`);
+            if (response.status === 200) {
+                console.log(response.data);
+                setPostUser(response.data);
+                //initialise l'etat des postes liké par par l'utilisateur connecter
+                const likers = {};
+                response.data.forEach((post) => {
+                    likers[post.id] = post.isLiked; //boolean
+                })
+                setLikedPosts(likers);
+
+                const followers = {};
+                response.data.forEach((post) => {
+                    followers[post.idAuthor] = post.isFollowingAuthor //boolean
+                })
+                setFollowersUsers(followers);
+            }
+        } catch (error) {
+            console.log("Impossible de charger les publications." + error.message);
+        } finally {
+            setIsLoading(false);
         }
-    }, [accessToken]);
+    }
+
+    const getAllCommentByPostId = async (postId) => {
+        const response = await customAxios.get(`/comment/publication/${postId}`);
+        if (response.status === 200) {
+            console.log(response.data);
+            setCommentsUser(response.data);
+        }
+    }
 
 
     const value = {
-        user, userConnected, navigate, posts, setPosts, isLoading, setIsLoading,
-        accessToken, setAccessToken, getAllPost, getUserById, getConnectedUser,
-        likedPosts, setLikedPosts, followersUsers, setFollowersUsers
+        userProfile,
+        userConnected,
+        navigate,
+        posts,
+        postsUser,
+        setPosts,
+        isLoading,
+        setIsLoading,
+        accessToken,
+        setAccessToken,
+        likedPosts,
+        setLikedPosts,
+        followersUsers,
+        setFollowersUsers,
+        commentsUser,
+        setCommentsUser,
+        getAllPost,
+        getAllPostByUserId,
+        getUserProfileById,
+        getUserConnected,
+        getAllCommentByPostId
     }
 
     return (

@@ -1,47 +1,18 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import FormPost from "../components/FormPost.jsx";
 import PostItem from "../components/PostItem.jsx";
 import {StoreContext} from "../context/StoreContext.jsx";
-import {FaVideo} from "react-icons/fa6";
-import {FaPhotoVideo, FaSmile} from "react-icons/fa";
 
 function GlobalPost() {
 
-    const {
-        userConnected,
-        accessToken,
-        posts,
-        setPosts,
-        likedPosts,
-        setLikedPosts,
-        isLoading,
-        setIsLoading,
-        getAllPost,
-        followersUsers,
-        setFollowersUsers
-    } = useContext(StoreContext);
-
-    const photoProfileUserConnected = userConnected?.photoProfileUserConnected;
-    const idUserConnected = userConnected?.id
-
-
-    useEffect(() => {
-        if (accessToken) {
-            getAllPost();
-        }
-    }, [accessToken]);
+    const {isLoading, posts,} = useContext(StoreContext);
 
     return (
         <div>
-            <FormPost setIsLoading={setIsLoading} photoProfileUserConnected={photoProfileUserConnected}
-                      getAllPost={getAllPost}/>
-
-            {isLoading ? "Chargement..." :
-                <PostItem posts={posts} setPosts={setPosts} likedPosts={likedPosts} idUserConnected={idUserConnected}
-                          setLikedPosts={setLikedPosts} followersUsers={followersUsers}
-                          setFollowersUsers={setFollowersUsers} photoProfileUserConnected={photoProfileUserConnected}/>}
+            <FormPost/>
+            {isLoading ? "Chargement..." : <PostItem posts={posts}/>}
         </div>
-    )
+    );
 }
 
 

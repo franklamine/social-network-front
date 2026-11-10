@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const customAxios = axios.create({
+    // baseURL: "http://localhost:8081/frank-api",
     baseURL: "/frank-api",
 })
 
@@ -24,6 +25,7 @@ customAxios.interceptors.response.use(
             try {
                 const tokens = JSON.parse(localStorage.getItem("token"));
 
+                // const res = await axios.post("http://localhost:8081/frank-api/utilisateurs/refresh-token", {
                 const res = await axios.post("/frank-api/utilisateurs/refresh-token", {
                     token: tokens.refreshToken,
                 });

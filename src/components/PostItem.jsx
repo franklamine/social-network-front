@@ -1,32 +1,36 @@
 import {FaRegComment, FaRegHeart, FaRegThumbsUp, FaThumbsUp, FaTimes, FaUserCircle} from "react-icons/fa";
 import Comment from "./Comment.jsx";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {formatDistanceToNow} from "date-fns";
 import {fr} from "date-fns/locale";
 import {Link} from "react-router-dom";
 import {handleFollow} from "../utils-fonctions/handleFollow.js";
 import {handleUnFollow} from "../utils-fonctions/handleUnFollow.js";
 import {handleLiked} from "../utils-fonctions/handleLiked.js";
+import {StoreContext} from "../context/StoreContext.jsx";
 
-export default function PostItem({
-                                     photoProfileUserConnected,
-                                     posts,
-                                     setPosts,
-                                     likedPosts,
-                                     setLikedPosts,
-                                     idUserConnected,
-                                     followersUsers,
-                                     setFollowersUsers
-                                 }) {
+export default function PostItem({posts}) {
+
+    const {
+        userConnected,
+        setPosts,
+        likedPosts,
+        setLikedPosts,
+        followersUsers,
+        setFollowersUsers,
+        getAllCommentByPostId
+    } = useContext(StoreContext);
+
+
     const [showComment, setShowComment] = useState(false);
-    const [idPost, setIdPost] = useState(null);
+    const [selectedPostId, setSelectedPostId] = useState(null);
 
     const handleComment = (id) => {
-
-        if (idPost === id) {
+        if (selectedPostId === id) {
             setShowComment(!showComment);
         } else {
-            setIdPost(id);
+            getAllCommentByPostId(id)
+            setSelectedPostId(id);
             setShowComment(true);
         }
     }
@@ -51,25 +55,25 @@ export default function PostItem({
             {posts.map((post) => (
                 <div key={post.id} className="bg-white shadow w-full ">
                     <div className="flex items-center gap-4 px-4 pt-2">
-                        {post.photoAuteurPublication ?
-                            <Link to={`/profile/${post.idAuteur}`}><img
-                                className="w-10 h-10 rounded-full object-cover" src={`${post.photoAuteurPublication}`}
+                        {post.author.userProfile ?
+                            <Link to={`/profile/${post.author.id}`}><img
+                                className="w-10 h-10 rounded-full object-cover" src={`${post.author.userProfile}`}
                                 alt=""/></Link> :
-                            <Link to={`/profile/${post.idAuteur}`}><FaUserCircle
+                            <Link to={`/profile/${post.author.id}`}><FaUserCircle
                                 className="w-10 h-10 text-gray-400"/></Link>
                         }
-                        <div className="flex-1 flex items-center justify-between">{post.name}
+                        <div className="flex-1 flex items-center justify-between">
                             <div>
-                                <h3 className="font-semibold text-sm ">{post.auteurPublication}
-                                    {post.idAuteur !== idUserConnected ? (
-                                        !followersUsers[post.idAuteur] ?
-                                            <button onClick={() => handleFollow(post.idAuteur, setFollowersUsers)}
+                                <h3 className="font-semibold text-sm ">{post.author.prenom}
+                                    {post.author.id !== userConnected?.id ? (
+                                        !followersUsers[post.author.id] ?
+                                            <button onClick={() => handleFollow(post.author.id, setFollowersUsers)}
                                                     className={"ml-2 px-2 text-white border rounded bg-[#8A2BE2]"}>suivre</button>
-                                            : <button onClick={() => handleUnFollow(post.idAuteur, setFollowersUsers)}
+                                            : <button onClick={() => handleUnFollow(post.author.id, setFollowersUsers)}
                                                       className={"ml-2 text-blue-500"}>suivis</button>
                                     ) : null}
                                 </h3>
-                                <h4 className="text-xs">{formatDistanceToNow(new Date(post.date), {
+                                <h4 className="text-xs">{formatDistanceToNow(new Date(post.createdAt), {
                                     addSuffix: true,
                                     locale: fr
                                 })}</h4>
@@ -96,7 +100,7 @@ export default function PostItem({
                             <span>{post.likeCount}</span>
                         </div>
                         <div className="flex items-center gap-4 ">
-                            <p>{post.comments.length} Comments</p>
+                            <p>{post.commentCount} Comments</p>
                             <p>0 Share</p>
                         </div>
                     </div>
@@ -105,7 +109,7 @@ export default function PostItem({
 
                     <div className="flex justify-around text-gray-500 text-sm  px-2 py-1 border ">
                         <button
-                            onClick={() => handleLiked(post.id,setLikedPosts, setPosts)}
+                            onClick={() => handleLiked(post.id, setLikedPosts, setPosts)}
                             className={`${likedPosts[post.id] ? "text-blue-500" : ""} flex items-center gap-2 px-2 py-2  rounded hover:bg-gray-200 transition duration-200`}>
                             <FaRegHeart className=" w-5 h-5"/>
                             <span>Like</span>
@@ -122,10 +126,7 @@ export default function PostItem({
                         </button>
                     </div>
 
-                    {showComment && idPost === post.id ?
-                        <Comment posts={posts} setPosts={setPosts}
-                                 postId={post.id} setShowComment={setShowComment}
-                                 photoProfileUserConnected={photoProfileUserConnected}/> : ""}
+                    {showComment && selectedPostId === post.id ? <Comment setShowComment={setShowComment} postId={post.id} /> : ""}
                 </div>
             ))}
         </div>

@@ -9,7 +9,6 @@ import React from "react";
 
 export default function FormPost({photoProfileUserConnected, getAllPost, setIsLoading}) {
 
-
     const {
         register,
         handleSubmit,
@@ -42,10 +41,10 @@ export default function FormPost({photoProfileUserConnected, getAllPost, setIsLo
                     "Content-Type": "multipart/form-data",
                 },
             });
-            setIsLoading(true);
+            // setIsLoading(true);
             console.log(res);
             if (res.status === 201) {
-                setIsLoading(false);
+                // setIsLoading(false);
                 getAllPost();
                 toast.success("Publication réussie !");
                 reset();

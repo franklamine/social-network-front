@@ -1,36 +1,31 @@
 import {logout} from "../utils-fonctions/logout.js";
 import {FaAdjust, FaCog, FaCommentDots, FaQuestionCircle, FaSignOutAlt, FaUserCircle} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {StoreContext} from "../context/StoreContext.jsx";
 
-function Account({
-                     navigate,
-                     setAccessToken,
-                     idUserConnected,
-                     getUserById,
-                     photoProfileUserConnected,
-                     nomEtPrenomUserConnected,
-                     setShowAccount
-                 }) {
+function Account({setShowAccount}) {
+
+    const {userConnected, navigate, setAccessToken} = useContext(StoreContext);
 
     return (
         <div>
             <div className="bg-white rounded-xl shadow-xl transition duration-200 ">
                 <div className="rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.25)] p-4 mx-3 ">
                     <div className="flex items-center gap-2 mb-3">
-                        {photoProfileUserConnected ?
-                            <Link to={`/profile/${idUserConnected}`} onClick={() => {
+                        {userConnected?.userProfile ?
+                            <Link to={`/profile/${userConnected?.id}`} onClick={() => {
                                 setShowAccount(false);
-                                getUserById(idUserConnected)
                             }}><img
-                                className="w-10 h-10 rounded-full object-cover" src={photoProfileUserConnected} alt=""/></Link> :
-                            <Link to={`/profile/${idUserConnected}`}
+                                className="w-10 h-10 rounded-full object-cover" src={userConnected?.userProfile}
+                                alt=""/></Link> :
+                            <Link to={`/profile/${userConnected?.id}`}
                                   onClick={() => {
                                       setShowAccount(false);
-                                      getUserById(idUserConnected)
                                   }}><FaUserCircle
                                 className="w-10 h-10 text-gray-400"/></Link>
                         }
-                        <p>{nomEtPrenomUserConnected}</p>
+                        <p>{userConnected?.prenom}</p>
                     </div>
                     <hr className="bg-gray-200 h-[2px] "/>
                     <p className="rounded-lg px-2 py-1 bg-gray-200 text-center">See All Profiles</p>
@@ -55,8 +50,7 @@ function Account({
                     <FaSignOutAlt className="w-5 h-5"/>
                     <span>Déconnexion</span>
                 </button>
-                <p className="mx-4 mt-10 text-xs">Privacy . Terms . Advertising . Add Choices . Cookies . More . Frank @
-                    2025</p>
+                <p className="mx-4 mt-10 text-xs">Privacy . Terms . Frank @ 2025</p>
             </div>
         </div>
     )

@@ -1,24 +1,27 @@
 import {toast} from "react-toastify";
-import customAxios from "../api/customAxios.js";
+import axios from "axios";
 
 
-export const logout = (navigate, setAccessToken) => {
+export const logout = async (navigate, setAccessToken) => {
 
-    customAxios
-        .post("/utilisateurs/deconnexion", {
-            token: JSON.parse(localStorage.getItem("token")).refreshToken,
-        })
-        .then((response) => {
+    const tokens = JSON.parse(localStorage.getItem("token") || "null");
+
+    try {
+        if (tokens?.refreshToken) {
+            // const response = await axios.post("http://localhost:8081/frank-api/utilisateurs/deconnexion", {token: tokens.refreshToken,});
+            const response = await axios.post("/frank-api/utilisateurs/deconnexion", {token: tokens.refreshToken,});
+
             if (response.status === 200) {
                 localStorage.removeItem("token");
                 setAccessToken("");
-                navigate("/connexion");
+                navigate("/connexion", {replace: true});
                 toast.success(response.data, {position: "top-center"});
             }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 
