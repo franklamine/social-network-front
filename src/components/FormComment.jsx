@@ -5,9 +5,9 @@ import {toast} from "react-toastify";
 import {FaPaperPlane, FaUserCircle} from "react-icons/fa";
 import {StoreContext} from "../context/StoreContext.jsx";
 
-function FormComment() {
+function FormComment({postId}) {
 
-    const {userConnected, setPosts, postId} = useContext(StoreContext);
+    const {userConnected, setCommentsUser} = useContext(StoreContext);
 
 
     const {
@@ -24,12 +24,8 @@ function FormComment() {
             })
             if (res.status === 201) {
                 toast.success("Comment successfully added");
-                const savedComment = res.data;
 
-                setPosts((prevPosts) => prevPosts.map((post) => post.id === postId ? {
-                    ...post,
-                    comments: [...post.comments, savedComment]
-                } : post));
+                setCommentsUser((prevComments) => [...prevComments, res.data]);
 
                 reset();
             }
